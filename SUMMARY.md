@@ -3,6 +3,7 @@
 * [The Java® Virtual Machine Specification](README.md)
 * [Preface to the Java SE 8 Edition](preface-to-the-java-se-8-edition.md)
 * [Chapter 1. Introduction](chapter-1.-introduction/README.md)
+  * [1.1. A Bit of History](chapter-1.-introduction/1.1.-a-bit-of-history.md)
   * [1.2. The Java Virtual Machine](chapter-1.-introduction/1.2.-the-java-virtual-machine.md)
   * [1.3. Organization of the Specification](chapter-1.-introduction/1.3.-organization-of-the-specification.md)
   * [1.4. Notation](chapter-1.-introduction/1.4.-notation.md)
