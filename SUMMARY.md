@@ -4,7 +4,7 @@
 * [Preface to the Java SE 8 Edition](preface-to-the-java-se-8-edition.md)
 * [Chapter 1. Introduction](chapter-1.-introduction.md)
 * [Chapter 2. The Structure of the Java Virtual Machine](chapter-2.-the-structure-of-the-java-virtual-machine/README.md)
-  * [2.6. Frames](chapter-2.-the-structure-of-the-java-virtual-machine/2.6.-frames.md)
+  * [2.4. Reference Types and Values](chapter-2.-the-structure-of-the-java-virtual-machine/2.6.-frames.md)
   * [2.5. Run-Time Data Areas](chapter-2.-the-structure-of-the-java-virtual-machine/2.5.-run-time-data-areas.md)
   * [2.6. Frames](chapter-2.-the-structure-of-the-java-virtual-machine/2.6.-frames-1.md)
   * [2.7. Representation of Objects](chapter-2.-the-structure-of-the-java-virtual-machine/2.7.-representation-of-objects.md)
