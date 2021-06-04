@@ -4,6 +4,7 @@
 * [Preface to the Java SE 8 Edition](preface-to-the-java-se-8-edition.md)
 * [Chapter 1. Introduction](chapter-1.-introduction.md)
 * [Chapter 2. The Structure of the Java Virtual Machine](chapter-2.-the-structure-of-the-java-virtual-machine/README.md)
+  * [2.1. The class File Format](chapter-2.-the-structure-of-the-java-virtual-machine/2.1.-the-class-file-format.md)
   * [2.2. Data Types](chapter-2.-the-structure-of-the-java-virtual-machine/2.2.-data-types.md)
   * [2.3. Primitive Types and Values](chapter-2.-the-structure-of-the-java-virtual-machine/2.3.-primitive-types-and-values.md)
   * [2.4. Reference Types and Values](chapter-2.-the-structure-of-the-java-virtual-machine/2.6.-frames.md)
