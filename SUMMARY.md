@@ -56,7 +56,7 @@
 * [Chapter 6. The Java Virtual Machine Instruction Set](chapter-6.-the-java-virtual-machine-instruction-set/README.md)
   * [6.5. Instructions \(b\)](chapter-6.-the-java-virtual-machine-instruction-set/6.5.-instructions-ior-end.md)
   * [6.5. Instructions \(a\)](chapter-6.-the-java-virtual-machine-instruction-set/6.5.-instructions.md)
-  * [6.5. Instructions \(f-invokeVirtual\)](chapter-6.-the-java-virtual-machine-instruction-set/6.5.-instructions-f-invokevirtual.md)
+  * [6.5. Instructions \(c\)](chapter-6.-the-java-virtual-machine-instruction-set/6.5.-instructions-f-invokevirtual.md)
 * [Chapter 7. Opcode Mnemonics by Opcode](chapter-7.-opcode-mnemonics-by-opcode.md)
 * [Index](index.md)
 * [Appendix A. Limited License Grant](appendix-a.-limited-license-grant.md)
