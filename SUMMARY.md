@@ -1,9 +1,7 @@
 # Table of contents
 
 * [The Java® Virtual Machine Specification](README.md)
-* [The Java® Virtual Machine Specification](the-java-r-virtual-machine-specification.md)
 * [Preface to the Java SE 8 Edition](preface-to-the-java-se-8-edition.md)
-* [Legal Notice](legal-notice.md)
 * [Chapter 1. Introduction](chapter-1.-introduction.md)
 * [Chapter 2. The Structure of the Java Virtual Machine](chapter-2.-the-structure-of-the-java-virtual-machine.md)
 * [Chapter 3. Compiling for the Java Virtual Machine](chapter-3.-compiling-for-the-java-virtual-machine.md)
