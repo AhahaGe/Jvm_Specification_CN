@@ -18,6 +18,7 @@
   * [2.12. Class Libraries](chapter-2.-the-structure-of-the-java-virtual-machine/2.12.-class-libraries.md)
   * [2.13. Public Design, Private Implementation](chapter-2.-the-structure-of-the-java-virtual-machine/2.13.-public-design-private-implementation.md)
 * [Chapter 3. Compiling for the Java Virtual Machine](chapter-3.-compiling-for-the-java-virtual-machine/README.md)
+  * [3.13. Compiling finally](chapter-3.-compiling-for-the-java-virtual-machine/3.13.-compiling-finally.md)
   * [3.14. Synchronization](chapter-3.-compiling-for-the-java-virtual-machine/3.14.-synchronization.md)
   * [3.15. Annotations](chapter-3.-compiling-for-the-java-virtual-machine/3.15.-annotations.md)
 * [Chapter 4. The class File Format](chapter-4.-the-class-file-format/README.md)
