@@ -18,6 +18,7 @@
   * [2.12. Class Libraries](chapter-2.-the-structure-of-the-java-virtual-machine/2.12.-class-libraries.md)
   * [2.13. Public Design, Private Implementation](chapter-2.-the-structure-of-the-java-virtual-machine/2.13.-public-design-private-implementation.md)
 * [Chapter 3. Compiling for the Java Virtual Machine](chapter-3.-compiling-for-the-java-virtual-machine/README.md)
+  * [3.9. Arrays](chapter-3.-compiling-for-the-java-virtual-machine/3.9.-arrays.md)
   * [3.10. Compiling Switches](chapter-3.-compiling-for-the-java-virtual-machine/3.10.-compiling-switches.md)
   * [3.11. Operations on the Operand Stack](chapter-3.-compiling-for-the-java-virtual-machine/3.11.-operations-on-the-operand-stack.md)
   * [3.12. Throwing and Handling Exceptions](chapter-3.-compiling-for-the-java-virtual-machine/3.12.-throwing-and-handling-exceptions.md)
