@@ -164,7 +164,7 @@ Method int addTwoStatic(int,int)
 
 The only difference is that the method arguments appear starting in local variable _0_ rather than _1_.
 
-The normal method invocation for a instance method dispatches on the run-time type of the object. \(They are virtual, in C++ terms.\) Such an invocation is implemented using the _invokevirtual_ instruction, which takes as its argument an index to a run-time constant pool entry giving the internal form of the binary name of the class type of the object, the name of the method to invoke, and that method's descriptor \([§4.3.3](chapter-4.-the-class-file-format.md#jvms-4.3.3)\). To invoke the `addTwo` method, defined earlier as an instance method, we might write:
+The normal method invocation for a instance method dispatches on the run-time type of the object. \(They are virtual, in C++ terms.\) Such an invocation is implemented using the _invokevirtual_ instruction, which takes as its argument an index to a run-time constant pool entry giving the internal form of the binary name of the class type of the object, the name of the method to invoke, and that method's descriptor \([§4.3.3](chapter-4.-the-class-file-format/#jvms-4.3.3)\). To invoke the `addTwo` method, defined earlier as an instance method, we might write:
 
 ```text
 int add12and13() {
@@ -439,7 +439,7 @@ Method int create3DArray()[][][]
 9   areturn
 ```
 
-The first operand of the _multianewarray_ instruction is the run-time constant pool index to the array class type to be created. The second is the number of dimensions of that array type to actually create. The _multianewarray_ instruction can be used to create all the dimensions of the type, as the code for `create3DArray` shows. Note that the multidimensional array is just an object and so is loaded and returned by an _aload\_1_ and _areturn_ instruction, respectively. For information about array class names, see [§4.4.1](chapter-4.-the-class-file-format.md#jvms-4.4.1).
+The first operand of the _multianewarray_ instruction is the run-time constant pool index to the array class type to be created. The second is the number of dimensions of that array type to actually create. The _multianewarray_ instruction can be used to create all the dimensions of the type, as the code for `create3DArray` shows. Note that the multidimensional array is just an object and so is loaded and returned by an _aload\_1_ and _areturn_ instruction, respectively. For information about array class names, see [§4.4.1](chapter-4.-the-class-file-format/#jvms-4.4.1).
 
 All arrays have associated lengths, which are accessed via the _arraylength_ instruction.
 
@@ -631,7 +631,7 @@ From    To      Target      Type
 0       4       5           Class TestExc
 ```
 
-The invocation of `handleExc`, the contents of the `catch` clause, is also compiled like a normal method invocation. However, the presence of a `catch` clause causes the compiler to generate an exception table entry \([§2.10](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.10), [§4.7.3](chapter-4.-the-class-file-format.md#jvms-4.7.3)\). The exception table for the `catchOne` method has one entry corresponding to the one argument \(an instance of class `TestExc`\) that the `catch` clause of `catchOne` can handle. If some value that is an instance of `TestExc` is thrown during execution of the instructions between indices _0_ and _4_ in `catchOne`, control is transferred to the Java Virtual Machine code at index _5_, which implements the block of the `catch` clause. If the value that is thrown is not an instance of `TestExc`, the `catch` clause of `catchOne` cannot handle it. Instead, the value is rethrown to the invoker of `catchOne`.
+The invocation of `handleExc`, the contents of the `catch` clause, is also compiled like a normal method invocation. However, the presence of a `catch` clause causes the compiler to generate an exception table entry \([§2.10](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.10), [§4.7.3](chapter-4.-the-class-file-format/#jvms-4.7.3)\). The exception table for the `catchOne` method has one entry corresponding to the one argument \(an instance of class `TestExc`\) that the `catch` clause of `catchOne` can handle. If some value that is an instance of `TestExc` is thrown during execution of the instructions between indices _0_ and _4_ in `catchOne`, control is transferred to the Java Virtual Machine code at index _5_, which implements the block of the `catch` clause. If the value that is thrown is not an instance of `TestExc`, the `catch` clause of `catchOne` cannot handle it. Instead, the value is rethrown to the invoker of `catchOne`.
 
 A `try` may have multiple `catch` clauses:
 
@@ -725,9 +725,9 @@ The nesting of `catch` clauses is represented only in the exception table. The J
 
 For instance, if the invocation of `tryItOut` \(at index _1_\) threw an instance of `TestExc1`, it would be handled by the `catch` clause that invokes `handleExc1`. This is so even though the exception occurs within the bounds of the outer `catch` clause \(catching `TestExc2`\) and even though that outer `catch` clause might otherwise have been able to handle the thrown value.
 
-As a subtle point, note that the range of a `catch` clause is inclusive on the "from" end and exclusive on the "to" end \([§4.7.3](chapter-4.-the-class-file-format.md#jvms-4.7.3)\). Thus, the exception table entry for the `catch` clause catching `TestExc1` does not cover the _return_ instruction at offset _4_. However, the exception table entry for the `catch` clause catching `TestExc2` does cover the _return_ instruction at offset _11_. Return instructions within nested `catch` clauses are included in the range of instructions covered by nesting `catch` clauses.
+As a subtle point, note that the range of a `catch` clause is inclusive on the "from" end and exclusive on the "to" end \([§4.7.3](chapter-4.-the-class-file-format/#jvms-4.7.3)\). Thus, the exception table entry for the `catch` clause catching `TestExc1` does not cover the _return_ instruction at offset _4_. However, the exception table entry for the `catch` clause catching `TestExc2` does cover the _return_ instruction at offset _11_. Return instructions within nested `catch` clauses are included in the range of instructions covered by nesting `catch` clauses.
 
-\(This section assumes a compiler generates `class` files with version number 50.0 or below, so that the _jsr_ instruction may be used. See also [§4.10.2.5](chapter-4.-the-class-file-format.md#jvms-4.10.2.5).\)
+\(This section assumes a compiler generates `class` files with version number 50.0 or below, so that the _jsr_ instruction may be used. See also [§4.10.2.5](chapter-4.-the-class-file-format/#jvms-4.10.2.5).\)
 
 Compilation of a `try`-`finally` statement is similar to that of `try`-`catch`. Prior to transferring control outside the `try` statement, whether that transfer is normal or abrupt, because an exception has been thrown, the `finally` clause must first be executed. For this simple example:
 
@@ -865,14 +865,14 @@ From    To      Target      Type
 
 The compiler ensures that at any method invocation completion, a _monitorexit_ instruction will have been executed for each _monitorenter_ instruction executed since the method invocation. This is the case whether the method invocation completes normally \([§2.6.4](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.6.4)\) or abruptly \([§2.6.5](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.6.5)\). To enforce proper pairing of _monitorenter_ and _monitorexit_ instructions on abrupt method invocation completion, the compiler generates exception handlers \([§2.10](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.10)\) that will match any exception and whose associated code executes the necessary _monitorexit_ instructions.
 
-The representation of annotations in `class` files is described in [§4.7.16](chapter-4.-the-class-file-format.md#jvms-4.7.16)-[§4.7.22](chapter-4.-the-class-file-format.md#jvms-4.7.22). These sections make it clear how to represent annotations on declarations of classes, interfaces, fields, methods, method parameters, and type parameters, as well as annotations on types used in those declarations. Annotations on package declarations require additional rules, given here.
+The representation of annotations in `class` files is described in [§4.7.16](chapter-4.-the-class-file-format/#jvms-4.7.16)-[§4.7.22](chapter-4.-the-class-file-format/#jvms-4.7.22). These sections make it clear how to represent annotations on declarations of classes, interfaces, fields, methods, method parameters, and type parameters, as well as annotations on types used in those declarations. Annotations on package declarations require additional rules, given here.
 
 When the compiler encounters an annotated package declaration that must be made available at run time, it emits a `class` file with the following properties:
 
-*  The `class` file represents an interface, that is, the `ACC_INTERFACE` and `ACC_ABSTRACT` flags of the `ClassFile` structure are set \([§4.1](chapter-4.-the-class-file-format.md#jvms-4.1)\).
+*  The `class` file represents an interface, that is, the `ACC_INTERFACE` and `ACC_ABSTRACT` flags of the `ClassFile` structure are set \([§4.1](chapter-4.-the-class-file-format/#jvms-4.1)\).
 *  If the `class` file version number is less than 50.0, then the `ACC_SYNTHETIC` flag is unset; if the `class` file version number is 50.0 or above, then the `ACC_SYNTHETIC` flag is set.
 *  The interface has package access \(JLS §6.6.1\).
-*  The interface's name is the internal form \([§4.2.1](chapter-4.-the-class-file-format.md#jvms-4.2.1)\) of _`package-name`_`.package-info`.
+*  The interface's name is the internal form \([§4.2.1](chapter-4.-the-class-file-format/#jvms-4.2.1)\) of _`package-name`_`.package-info`.
 *  The interface has no superinterfaces.
 *  The interface's only members are those implied by _The Java Language Specification, Java SE 8 Edition_ \(JLS §9.2\).
 *  The annotations on the package declaration are stored as `RuntimeVisibleAnnotations` and `RuntimeInvisibleAnnotations` attributes in the `attributes` table of the `ClassFile` structure.

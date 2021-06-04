@@ -10,30 +10,30 @@ In this chapter, [§5.1](chapter-5.-loading-linking-and-initializing.md#jvms-5.1
 
 The Java Virtual Machine maintains a per-type constant pool \([§2.5.5](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.5.5)\), a run-time data structure that serves many of the purposes of the symbol table of a conventional programming language implementation.
 
-The `constant_pool` table \([§4.4](chapter-4.-the-class-file-format.md#jvms-4.4)\) in the binary representation of a class or interface is used to construct the run-time constant pool upon class or interface creation \([§5.3](chapter-5.-loading-linking-and-initializing.md#jvms-5.3)\). All references in the run-time constant pool are initially symbolic. The symbolic references in the run-time constant pool are derived from structures in the binary representation of the class or interface as follows:
+The `constant_pool` table \([§4.4](chapter-4.-the-class-file-format/#jvms-4.4)\) in the binary representation of a class or interface is used to construct the run-time constant pool upon class or interface creation \([§5.3](chapter-5.-loading-linking-and-initializing.md#jvms-5.3)\). All references in the run-time constant pool are initially symbolic. The symbolic references in the run-time constant pool are derived from structures in the binary representation of the class or interface as follows:
 
-* A symbolic reference to a class or interface is derived from a `CONSTANT_Class_info` structure \([§4.4.1](chapter-4.-the-class-file-format.md#jvms-4.4.1)\) in the binary representation of a class or interface. Such a reference gives the name of the class or interface in the form returned by the `Class.getName` method, that is:
+* A symbolic reference to a class or interface is derived from a `CONSTANT_Class_info` structure \([§4.4.1](chapter-4.-the-class-file-format/#jvms-4.4.1)\) in the binary representation of a class or interface. Such a reference gives the name of the class or interface in the form returned by the `Class.getName` method, that is:
 
-  * For a nonarray class or an interface, the name is the binary name \([§4.2.1](chapter-4.-the-class-file-format.md#jvms-4.2.1)\) of the class or interface.
+  * For a nonarray class or an interface, the name is the binary name \([§4.2.1](chapter-4.-the-class-file-format/#jvms-4.2.1)\) of the class or interface.
   * For an array class of _n_ dimensions, the name begins with _n_ occurrences of the ASCII "\[" character followed by a representation of the element type:
-    * If the element type is a primitive type, it is represented by the corresponding field descriptor \([§4.3.2](chapter-4.-the-class-file-format.md#jvms-4.3.2)\).
-    * Otherwise, if the element type is a reference type, it is represented by the ASCII "L" character followed by the binary name \([§4.2.1](chapter-4.-the-class-file-format.md#jvms-4.2.1)\) of the element type followed by the ASCII ";" character.
+    * If the element type is a primitive type, it is represented by the corresponding field descriptor \([§4.3.2](chapter-4.-the-class-file-format/#jvms-4.3.2)\).
+    * Otherwise, if the element type is a reference type, it is represented by the ASCII "L" character followed by the binary name \([§4.2.1](chapter-4.-the-class-file-format/#jvms-4.2.1)\) of the element type followed by the ASCII ";" character.
 
   Whenever this chapter refers to the name of a class or interface, it should be understood to be in the form returned by the `Class.getName` method.
 
-* A symbolic reference to a field of a class or an interface is derived from a `CONSTANT_Fieldref_info` structure \([§4.4.2](chapter-4.-the-class-file-format.md#jvms-4.4.2)\) in the binary representation of a class or interface. Such a reference gives the name and descriptor of the field, as well as a symbolic reference to the class or interface in which the field is to be found.
-* A symbolic reference to a method of a class is derived from a `CONSTANT_Methodref_info` structure \([§4.4.2](chapter-4.-the-class-file-format.md#jvms-4.4.2)\) in the binary representation of a class or interface. Such a reference gives the name and descriptor of the method, as well as a symbolic reference to the class in which the method is to be found.
-* A symbolic reference to a method of an interface is derived from a `CONSTANT_InterfaceMethodref_info` structure \([§4.4.2](chapter-4.-the-class-file-format.md#jvms-4.4.2)\) in the binary representation of a class or interface. Such a reference gives the name and descriptor of the interface method, as well as a symbolic reference to the interface in which the method is to be found.
-* A symbolic reference to a method handle is derived from a `CONSTANT_MethodHandle_info` structure \([§4.4.8](chapter-4.-the-class-file-format.md#jvms-4.4.8)\) in the binary representation of a class or interface. Such a reference gives a symbolic reference to a field of a class or interface, or a method of a class, or a method of an interface, depending on the kind of the method handle.
-* A symbolic reference to a method type is derived from a `CONSTANT_MethodType_info` structure \([§4.4.9](chapter-4.-the-class-file-format.md#jvms-4.4.9)\) in the binary representation of a class or interface. Such a reference gives a method descriptor \([§4.3.3](chapter-4.-the-class-file-format.md#jvms-4.3.3)\).
-* A symbolic reference to a _call site specifier_ is derived from a `CONSTANT_InvokeDynamic_info` structure \([§4.4.10](chapter-4.-the-class-file-format.md#jvms-4.4.10)\) in the binary representation of a class or interface. Such a reference gives:
+* A symbolic reference to a field of a class or an interface is derived from a `CONSTANT_Fieldref_info` structure \([§4.4.2](chapter-4.-the-class-file-format/#jvms-4.4.2)\) in the binary representation of a class or interface. Such a reference gives the name and descriptor of the field, as well as a symbolic reference to the class or interface in which the field is to be found.
+* A symbolic reference to a method of a class is derived from a `CONSTANT_Methodref_info` structure \([§4.4.2](chapter-4.-the-class-file-format/#jvms-4.4.2)\) in the binary representation of a class or interface. Such a reference gives the name and descriptor of the method, as well as a symbolic reference to the class in which the method is to be found.
+* A symbolic reference to a method of an interface is derived from a `CONSTANT_InterfaceMethodref_info` structure \([§4.4.2](chapter-4.-the-class-file-format/#jvms-4.4.2)\) in the binary representation of a class or interface. Such a reference gives the name and descriptor of the interface method, as well as a symbolic reference to the interface in which the method is to be found.
+* A symbolic reference to a method handle is derived from a `CONSTANT_MethodHandle_info` structure \([§4.4.8](chapter-4.-the-class-file-format/#jvms-4.4.8)\) in the binary representation of a class or interface. Such a reference gives a symbolic reference to a field of a class or interface, or a method of a class, or a method of an interface, depending on the kind of the method handle.
+* A symbolic reference to a method type is derived from a `CONSTANT_MethodType_info` structure \([§4.4.9](chapter-4.-the-class-file-format/#jvms-4.4.9)\) in the binary representation of a class or interface. Such a reference gives a method descriptor \([§4.3.3](chapter-4.-the-class-file-format/#jvms-4.3.3)\).
+* A symbolic reference to a _call site specifier_ is derived from a `CONSTANT_InvokeDynamic_info` structure \([§4.4.10](chapter-4.-the-class-file-format/#jvms-4.4.10)\) in the binary representation of a class or interface. Such a reference gives:
   * a symbolic reference to a method handle, which will serve as a bootstrap method for an _invokedynamic_ instruction \([§_invokedynamic_]()\);
   * a sequence of symbolic references \(to classes, method types, and method handles\), string literals, and run-time constant values which will serve as _static arguments_ to a bootstrap method;
   * a method name and method descriptor.
 
 In addition, certain run-time values which are not symbolic references are derived from items found in the `constant_pool` table:
 
-* A string literal is a `reference` to an instance of class `String`, and is derived from a `CONSTANT_String_info` structure \([§4.4.3](chapter-4.-the-class-file-format.md#jvms-4.4.3)\) in the binary representation of a class or interface. The `CONSTANT_String_info` structure gives the sequence of Unicode code points constituting the string literal.
+* A string literal is a `reference` to an instance of class `String`, and is derived from a `CONSTANT_String_info` structure \([§4.4.3](chapter-4.-the-class-file-format/#jvms-4.4.3)\) in the binary representation of a class or interface. The `CONSTANT_String_info` structure gives the sequence of Unicode code points constituting the string literal.
 
   The Java programming language requires that identical string literals \(that is, literals that contain the same sequence of code points\) must refer to the same instance of class `String` \(JLS §3.10.5\). In addition, if the method `String.intern` is called on any string, the result is a `reference` to the same class instance that would be returned if that string appeared as a literal. Thus, the following expression must have the value `true`:
 
@@ -46,11 +46,11 @@ In addition, certain run-time values which are not symbolic references are deriv
   * If the method `String.intern` has previously been called on an instance of class `String` containing a sequence of Unicode code points identical to that given by the `CONSTANT_String_info` structure, then the result of string literal derivation is a `reference` to that same instance of class `String`.
   * Otherwise, a new instance of class `String` is created containing the sequence of Unicode code points given by the `CONSTANT_String_info` structure; a `reference` to that class instance is the result of string literal derivation. Finally, the `intern` method of the new `String` instance is invoked.
 
-* Run-time constant values are derived from `CONSTANT_Integer_info`, `CONSTANT_Float_info`, `CONSTANT_Long_info`, or `CONSTANT_Double_info` structures \([§4.4.4](chapter-4.-the-class-file-format.md#jvms-4.4.4), [§4.4.5](chapter-4.-the-class-file-format.md#jvms-4.4.5)\) in the binary representation of a class or interface.
+* Run-time constant values are derived from `CONSTANT_Integer_info`, `CONSTANT_Float_info`, `CONSTANT_Long_info`, or `CONSTANT_Double_info` structures \([§4.4.4](chapter-4.-the-class-file-format/#jvms-4.4.4), [§4.4.5](chapter-4.-the-class-file-format/#jvms-4.4.5)\) in the binary representation of a class or interface.
 
-  Note that `CONSTANT_Float_info` structures represent values in IEEE 754 single format and `CONSTANT_Double_info` structures represent values in IEEE 754 double format \([§4.4.4](chapter-4.-the-class-file-format.md#jvms-4.4.4), [§4.4.5](chapter-4.-the-class-file-format.md#jvms-4.4.5)\). The run-time constant values derived from these structures must thus be values that can be represented using IEEE 754 single and double formats, respectively.
+  Note that `CONSTANT_Float_info` structures represent values in IEEE 754 single format and `CONSTANT_Double_info` structures represent values in IEEE 754 double format \([§4.4.4](chapter-4.-the-class-file-format/#jvms-4.4.4), [§4.4.5](chapter-4.-the-class-file-format/#jvms-4.4.5)\). The run-time constant values derived from these structures must thus be values that can be represented using IEEE 754 single and double formats, respectively.
 
-The remaining structures in the `constant_pool` table of the binary representation of a class or interface - the `CONSTANT_NameAndType_info` and `CONSTANT_Utf8_info` structures \([§4.4.6](chapter-4.-the-class-file-format.md#jvms-4.4.6), [§4.4.7](chapter-4.-the-class-file-format.md#jvms-4.4.7)\) - are only used indirectly when deriving symbolic references to classes, interfaces, methods, fields, method types, and method handles, and when deriving string literals and call site specifiers.
+The remaining structures in the `constant_pool` table of the binary representation of a class or interface - the `CONSTANT_NameAndType_info` and `CONSTANT_Utf8_info` structures \([§4.4.6](chapter-4.-the-class-file-format/#jvms-4.4.6), [§4.4.7](chapter-4.-the-class-file-format/#jvms-4.4.7)\) - are only used indirectly when deriving symbolic references to classes, interfaces, methods, fields, method types, and method handles, and when deriving string literals and call site specifiers.
 
 ## 5.2. Java Virtual Machine Startup
 
@@ -62,7 +62,7 @@ In an implementation of the Java Virtual Machine, the initial class could be pro
 
 Creation of a class or interface C denoted by the name `N` consists of the construction in the method area of the Java Virtual Machine \([§2.5.4](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.5.4)\) of an implementation-specific internal representation of C. Class or interface creation is triggered by another class or interface D, which references C through its run-time constant pool. Class or interface creation may also be triggered by D invoking methods in certain Java SE platform class libraries \([§2.12](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.12)\) such as reflection.
 
-If C is not an array class, it is created by loading a binary representation of C \([§4 \(The `class` File Format\)](chapter-4.-the-class-file-format.md)\) using a class loader. Array classes do not have an external binary representation; they are created by the Java Virtual Machine rather than by a class loader.
+If C is not an array class, it is created by loading a binary representation of C \([§4 \(The `class` File Format\)](chapter-4.-the-class-file-format/)\) using a class loader. Array classes do not have an external binary representation; they are created by the Java Virtual Machine rather than by a class loader.
 
 There are two kinds of class loaders: the bootstrap class loader supplied by the Java Virtual Machine, and user-defined class loaders. Every user-defined class loader is an instance of a subclass of the abstract class `ClassLoader`. Applications employ user-defined class loaders in order to extend the manner in which the Java Virtual Machine dynamically loads and thereby creates classes. User-defined class loaders can be used to create classes that originate from user-defined sources. For example, a class could be downloaded across a network, generated on the fly, or extracted from an encrypted file.
 
@@ -70,7 +70,7 @@ A class loader `L` may create C by defining it directly or by delegating to anot
 
 When one class loader delegates to another class loader, the loader that initiates the loading is not necessarily the same loader that completes the loading and defines the class. If `L` creates C, either by defining it directly or by delegation, we say that `L` initiates loading of C or, equivalently, that `L` is an _initiating loader_ of C.
 
-At run time, a class or interface is determined not by its name alone, but by a pair: its binary name \([§4.2.1](chapter-4.-the-class-file-format.md#jvms-4.2.1)\) and its defining class loader. Each such class or interface belongs to a single _run-time package_. The run-time package of a class or interface is determined by the package name and defining class loader of the class or interface.
+At run time, a class or interface is determined not by its name alone, but by a pair: its binary name \([§4.2.1](chapter-4.-the-class-file-format/#jvms-4.2.1)\) and its defining class loader. Each such class or interface belongs to a single _run-time package_. The run-time package of a class or interface is determined by the package name and defining class loader of the class or interface.
 
 The Java Virtual Machine uses one of three procedures to create class or interface C denoted by `N`:
 
@@ -119,7 +119,7 @@ Otherwise, the Java Virtual Machine invokes `loadClass(N`\) on `L`. The value re
 
 When the `loadClass` method of the class loader `L` is invoked with the name `N` of a class or interface C to be loaded, `L` must perform one of the following two operations in order to load C:
 
-1. The class loader `L` can create an array of bytes representing C as the bytes of a `ClassFile` structure \([§4.1](chapter-4.-the-class-file-format.md#jvms-4.1)\); it then must invoke the method `defineClass` of class `ClassLoader`. Invoking `defineClass` causes the Java Virtual Machine to derive a class or interface denoted by `N` using `L` from the array of bytes using the algorithm found in [§5.3.5](chapter-5.-loading-linking-and-initializing.md#jvms-5.3.5).
+1. The class loader `L` can create an array of bytes representing C as the bytes of a `ClassFile` structure \([§4.1](chapter-4.-the-class-file-format/#jvms-4.1)\); it then must invoke the method `defineClass` of class `ClassLoader`. Invoking `defineClass` causes the Java Virtual Machine to derive a class or interface denoted by `N` using `L` from the array of bytes using the algorithm found in [§5.3.5](chapter-5.-loading-linking-and-initializing.md#jvms-5.3.5).
 2. The class loader `L` can delegate the loading of C to some other class loader `L`'. This is accomplished by passing the argument `N` directly or indirectly to an invocation of a method on `L`' \(typically the `loadClass` method\). The result of the invocation is C.
 
 In either \(1\) or \(2\), if the class loader `L` is unable to load a class or interface denoted by `N` for any reason, it must throw an instance of `ClassNotFoundException`.
@@ -171,8 +171,8 @@ The following steps are used to derive a `Class` object for the nonarray class o
 
    This phase of loading must detect the following errors:
 
-   * If the purported representation is not a `ClassFile` structure \([§4.1](chapter-4.-the-class-file-format.md#jvms-4.1), [§4.8](chapter-4.-the-class-file-format.md#jvms-4.8)\), loading throws an instance of `ClassFormatError`.
-   * Otherwise, if the purported representation is not of a supported major or minor version \([§4.1](chapter-4.-the-class-file-format.md#jvms-4.1)\), loading throws an instance of `UnsupportedClassVersionError`.
+   * If the purported representation is not a `ClassFile` structure \([§4.1](chapter-4.-the-class-file-format/#jvms-4.1), [§4.8](chapter-4.-the-class-file-format/#jvms-4.8)\), loading throws an instance of `ClassFormatError`.
+   * Otherwise, if the purported representation is not of a supported major or minor version \([§4.1](chapter-4.-the-class-file-format/#jvms-4.1)\), loading throws an instance of `UnsupportedClassVersionError`.
 
      `UnsupportedClassVersionError`, a subclass of `ClassFormatError`, was introduced to enable easy identification of a `ClassFormatError` caused by an attempt to load a class whose representation uses an unsupported version of the `class` file format. In JDK release 1.1 and earlier, an instance of `NoClassDefFoundError` or `ClassFormatError` was thrown in case of an unsupported version, depending on whether the class was being loaded by the system class loader or a user-defined class loader.
 
@@ -206,9 +206,9 @@ For example, a Java Virtual Machine implementation may choose to resolve each sy
 
 Because linking involves the allocation of new data structures, it may fail with an `OutOfMemoryError`.
 
- _Verification_ \([§4.10](chapter-4.-the-class-file-format.md#jvms-4.10)\) ensures that the binary representation of a class or interface is structurally correct \([§4.9](chapter-4.-the-class-file-format.md#jvms-4.9)\). Verification may cause additional classes and interfaces to be loaded \([§5.3](chapter-5.-loading-linking-and-initializing.md#jvms-5.3)\) but need not cause them to be verified or prepared.
+ _Verification_ \([§4.10](chapter-4.-the-class-file-format/#jvms-4.10)\) ensures that the binary representation of a class or interface is structurally correct \([§4.9](chapter-4.-the-class-file-format/#jvms-4.9)\). Verification may cause additional classes and interfaces to be loaded \([§5.3](chapter-5.-loading-linking-and-initializing.md#jvms-5.3)\) but need not cause them to be verified or prepared.
 
-If the binary representation of a class or interface does not satisfy the static or structural constraints listed in [§4.9](chapter-4.-the-class-file-format.md#jvms-4.9), then a `VerifyError` must be thrown at the point in the program that caused the class or interface to be verified.
+If the binary representation of a class or interface does not satisfy the static or structural constraints listed in [§4.9](chapter-4.-the-class-file-format/#jvms-4.9), then a `VerifyError` must be thrown at the point in the program that caused the class or interface to be verified.
 
 If an attempt by the Java Virtual Machine to verify a class or interface fails because an error is thrown that is an instance of `LinkageError` \(or a subclass\), then subsequent attempts to verify the class or interface always fail with the same error that was thrown as a result of the initial verification attempt.
 
@@ -381,7 +381,7 @@ The clause about accessibility is necessary because interface method resolution 
 
 #### 5.4.3.5. Method Type and Method Handle Resolution
 
-To resolve an unresolved symbolic reference to a method type, it is as if resolution occurs of unresolved symbolic references to classes and interfaces \([§5.4.3.1](chapter-5.-loading-linking-and-initializing.md#jvms-5.4.3.1)\) whose names correspond to the types given in the method descriptor \([§4.3.3](chapter-4.-the-class-file-format.md#jvms-4.3.3)\).
+To resolve an unresolved symbolic reference to a method type, it is as if resolution occurs of unresolved symbolic references to classes and interfaces \([§5.4.3.1](chapter-5.-loading-linking-and-initializing.md#jvms-5.4.3.1)\) whose names correspond to the types given in the method descriptor \([§4.3.3](chapter-4.-the-class-file-format/#jvms-4.3.3)\).
 
 Any exception that can be thrown as a result of failure of resolution of a class reference can thus be thrown as a result of failure of method type resolution.
 
@@ -391,7 +391,7 @@ Method type resolution occurs regardless of whether the run time constant pool a
 
 Resolution of an unresolved symbolic reference to a method handle is more complicated. Each method handle resolved by the Java Virtual Machine has an equivalent instruction sequence called its _bytecode behavior_, indicated by the method handle's _kind_. The integer values and descriptions of the nine kinds of method handle are given in [Table 5.4.3.5-A](chapter-5.-loading-linking-and-initializing.md#jvms-5.4.3.5-220).
 
-Symbolic references by an instruction sequence to fields or methods are indicated by `C.x:T`, where `x` and `T` are the name and descriptor \([§4.3.2](chapter-4.-the-class-file-format.md#jvms-4.3.2), [§4.3.3](chapter-4.-the-class-file-format.md#jvms-4.3.3)\) of the field or method, and `C` is the class or interface in which the field or method is to be found.
+Symbolic references by an instruction sequence to fields or methods are indicated by `C.x:T`, where `x` and `T` are the name and descriptor \([§4.3.2](chapter-4.-the-class-file-format/#jvms-4.3.2), [§4.3.3](chapter-4.-the-class-file-format/#jvms-4.3.3)\) of the field or method, and `C` is the class or interface in which the field or method is to be found.
 
 **Table 5.4.3.5-A. Bytecode Behaviors for Method Handles**
 
@@ -449,7 +449,7 @@ The type descriptor of this `java.lang.invoke.MethodHandle` instance is the `jav
 
 The type descriptor of a method handle is such that a valid call to `invokeExact` in `java.lang.invoke.MethodHandle` on the method handle has exactly the same stack effects as the bytecode behavior. Calling this method handle on a valid set of arguments has exactly the same effect and returns the same result \(if any\) as the corresponding bytecode behavior.
 
-If the method referenced by R has the `ACC_VARARGS` flag set \([§4.6](chapter-4.-the-class-file-format.md#jvms-4.6)\), then the `java.lang.invoke.MethodHandle` instance is a variable arity method handle; otherwise, it is a fixed arity method handle.
+If the method referenced by R has the `ACC_VARARGS` flag set \([§4.6](chapter-4.-the-class-file-format/#jvms-4.6)\), then the `java.lang.invoke.MethodHandle` instance is a variable arity method handle; otherwise, it is a fixed arity method handle.
 
 A variable arity method handle performs argument list boxing \(JLS §15.12.4.2\) when invoked via `invoke`, while its behavior with respect to `invokeExact` is as if the `ACC_VARARGS` flag were not set.
 
@@ -463,7 +463,7 @@ The `java.lang.invoke.MethodHandles` class in the Java SE platform API allows cr
 
 To resolve an unresolved symbolic reference to a call site specifier involves three steps:
 
-*  A call site specifier gives a symbolic reference to a method handle which is to serve as the _bootstrap method_ for a dynamic call site \([§4.7.23](chapter-4.-the-class-file-format.md#jvms-4.7.23)\). The method handle is resolved to obtain a `reference` to an instance of `java.lang.invoke.MethodHandle` \([§5.4.3.5](chapter-5.-loading-linking-and-initializing.md#jvms-5.4.3.5)\).
+*  A call site specifier gives a symbolic reference to a method handle which is to serve as the _bootstrap method_ for a dynamic call site \([§4.7.23](chapter-4.-the-class-file-format/#jvms-4.7.23)\). The method handle is resolved to obtain a `reference` to an instance of `java.lang.invoke.MethodHandle` \([§5.4.3.5](chapter-5.-loading-linking-and-initializing.md#jvms-5.4.3.5)\).
 *  A call site specifier gives a method descriptor, _TD_. A `reference` to an instance of `java.lang.invoke.MethodType` is obtained as if by resolution of a symbolic reference to a method type with the same parameter and return types as _TD_ \([§5.4.3.5](chapter-5.-loading-linking-and-initializing.md#jvms-5.4.3.5)\).
 *  A call site specifier gives zero or more _static arguments_, which communicate application-specific metadata to the bootstrap method. Any static arguments which are symbolic references to classes, method handles, or method types are resolved, as if by invocation of the _ldc_ instruction \([§_ldc_]()\), to obtain `reference`s to `Class` objects, `java.lang.invoke.MethodHandle` objects, and `java.lang.invoke.MethodType` objects respectively. Any static arguments that are string literals are used to obtain `reference`s to `String` objects.
 
@@ -487,7 +487,7 @@ A field or method R is accessible to a class or interface D if and only if any o
 *  R is either `protected` or has default access \(that is, neither `public` nor `protected` nor `private`\), and is declared by a class in the same run-time package as D.
 *  R is `private` and is declared in D.
 
-This discussion of access control omits a related restriction on the target of a `protected` field access or method invocation \(the target must be of class D or a subtype of D\). That requirement is checked as part of the verification process \([§4.10.1.8](chapter-4.-the-class-file-format.md#jvms-4.10.1.8)\); it is not part of link-time access control.
+This discussion of access control omits a related restriction on the target of a `protected` field access or method invocation \(the target must be of class D or a subtype of D\). That requirement is checked as part of the verification process \([§4.10.1.8](chapter-4.-the-class-file-format/#jvms-4.10.1.8)\); it is not part of link-time access control.
 
 An instance method `mC` declared in class C overrides another instance method `mA` declared in class A iff either `mC` is the same as `mA`, or all of the following are true:
 
@@ -538,7 +538,7 @@ Because the Java Virtual Machine is multithreaded, initialization of a class or 
 5.  If the `Class` object for C is in an erroneous state, then initialization is not possible. Release `LC` and throw a `NoClassDefFoundError`.
 6.  Otherwise, record the fact that initialization of the `Class` object for C is in progress by the current thread, and release `LC`.
 
-    Then, initialize each `final` `static` field of C with the constant value in its `ConstantValue` attribute \([§4.7.2](chapter-4.-the-class-file-format.md#jvms-4.7.2)\), in the order the fields appear in the `ClassFile` structure.
+    Then, initialize each `final` `static` field of C with the constant value in its `ConstantValue` attribute \([§4.7.2](chapter-4.-the-class-file-format/#jvms-4.7.2)\), in the order the fields appear in the `ClassFile` structure.
 
 7.  Next, if C is a class rather than an interface, and its superclass has not yet been initialized, then let SC be its superclass and let SI1, ..., SIn be all superinterfaces of C \(whether direct or indirect\) that declare at least one non-`abstract`, non-`static` method. The order of superinterfaces is given by a recursive enumeration over the superinterface hierarchy of each interface directly implemented by C. For each interface I directly implemented by C \(in the order of the `interfaces` array of C\), the enumeration recurs on I's superinterfaces \(in the order of the `interfaces` array of I\) before returning I.
 
