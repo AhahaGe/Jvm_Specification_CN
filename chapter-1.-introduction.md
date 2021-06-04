@@ -1,5 +1,7 @@
 # Chapter 1. Introduction
 
+### 1.1. A Bit of History
+
 The Java® programming language is a general-purpose, concurrent, object-oriented language. Its syntax is similar to C and C++, but it omits many of the features that make C and C++ complex, confusing, and unsafe. The Java platform was initially developed to address the problems of building software for networked consumer devices. It was designed to support multiple host architectures and to allow secure delivery of software components. To meet these requirements, compiled code had to survive transport across networks, operate on any client, and assure the client that it was safe to run.
 
 The popularization of the World Wide Web made these attributes much more interesting. Web browsers enabled millions of people to surf the Net and access media-rich content in simple ways. At last there was a medium where what you saw and heard was essentially the same regardless of the machine you were using and whether it was connected to a fast network or a slow modem.
@@ -10,7 +12,7 @@ The HotJava browser first showcased the interesting properties of the Java progr
 
 A Web browser incorporating the Java platform is no longer limited to a predetermined set of capabilities. Visitors to Web pages incorporating dynamic content can be assured that their machines cannot be damaged by that content. Programmers can write a program once, and it will run on any machine supplying a Java run-time environment.
 
-## 1.2. The Java Virtual Machine
+### 1.2. The Java Virtual Machine
 
 The Java Virtual Machine is the cornerstone of the Java platform. It is the component of the technology responsible for its hardware- and operating system-independence, the small size of its compiled code, and its ability to protect users from malicious programs.
 
@@ -24,7 +26,7 @@ For the sake of security, the Java Virtual Machine imposes strong syntactic and 
 
 The Java Virtual Machine specified here is compatible with the Java SE 8 platform, and supports the Java programming language specified in _The Java Language Specification, Java SE 8 Edition_.
 
-## 1.3. Organization of the Specification
+### 1.3. Organization of the Specification
 
 Chapter 2 gives an overview of the Java Virtual Machine architecture.
 
@@ -42,20 +44,24 @@ In the Second Edition of _The Java® Virtual Machine Specification_, Chapter 2 g
 
 In the Second Edition of _The Java® Virtual Machine Specification_, Chapter 8 detailed the low-level actions that explained the interaction of Java Virtual Machine threads with a shared main memory. In _The Java Virtual Machine Specification, Java SE 8 Edition_, the reader is referred to Chapter 17 of _The Java Language Specification, Java SE 8 Edition_ for information about threads and locks. Chapter 17 reflects _The Java Memory Model and Thread Specification_ produced by the JSR 133 Expert Group.
 
+### 1.4. Notation
+
 Throughout this specification we refer to classes and interfaces drawn from the Java SE platform API. Whenever we refer to a class or interface \(other than those declared in an example\) using a single identifier _N_, the intended reference is to the class or interface named _N_ in the package `java.lang`. We use the fully qualified name for classes or interfaces from packages other than `java.lang`.
 
-Whenever we refer to a class or interface that is declared in the package `java` or any of its subpackages, the intended reference is to that class or interface as loaded by the bootstrap class loader \([§5.3.1](chapter-5.-loading-linking-and-initializing.md#jvms-5.3.1)\).
+Whenever we refer to a class or interface that is declared in the package `java` or any of its subpackages, the intended reference is to that class or interface as loaded by the bootstrap class loader \([§5.3.1](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-5.html#jvms-5.3.1)\).
 
 Whenever we refer to a subpackage of a package named `java`, the intended reference is to that subpackage as determined by the bootstrap class loader.
 
 The use of fonts in this specification is as follows:
 
-*  A `fixed width` font is used for Java Virtual Machine data types, exceptions, errors, `class` file structures, Prolog code, and Java code fragments.
-*  _Italic_ is used for Java Virtual Machine "assembly language", its opcodes and operands, as well as items in the Java Virtual Machine's run-time data areas. It is also used to introduce new terms and simply for emphasis.
+* A `fixed width` font is used for Java Virtual Machine data types, exceptions, errors, `class` file structures, Prolog code, and Java code fragments.
+* _Italic_ is used for Java Virtual Machine "assembly language", its opcodes and operands, as well as items in the Java Virtual Machine's run-time data areas. It is also used to introduce new terms and simply for emphasis.
 
 Non-normative information, designed to clarify the specification, is given in smaller, indented text.
 
 This is non-normative information. It provides intuition, rationale, advice, examples, etc.
+
+### 1.5. Feedback
 
 Readers are invited to report technical errors and ambiguities in _The Java® Virtual Machine Specification_ to `jls-jvms-spec-comments@openjdk.java.net`.
 
