@@ -18,6 +18,7 @@
   * [2.12. Class Libraries](chapter-2.-the-structure-of-the-java-virtual-machine/2.12.-class-libraries.md)
   * [2.13. Public Design, Private Implementation](chapter-2.-the-structure-of-the-java-virtual-machine/2.13.-public-design-private-implementation.md)
 * [Chapter 3. Compiling for the Java Virtual Machine](chapter-3.-compiling-for-the-java-virtual-machine/README.md)
+  * [3.1. Format of Examples](chapter-3.-compiling-for-the-java-virtual-machine/3.1.-format-of-examples.md)
   * [3.2. Use of Constants, Local Variables, and Control Constructs](chapter-3.-compiling-for-the-java-virtual-machine/3.2.-use-of-constants-local-variables-and-control-constructs.md)
   * [3.3. Arithmetic](chapter-3.-compiling-for-the-java-virtual-machine/3.3.-arithmetic.md)
   * [3.4. Accessing the Run-Time Constant Pool](chapter-3.-compiling-for-the-java-virtual-machine/3.4.-accessing-the-run-time-constant-pool.md)
