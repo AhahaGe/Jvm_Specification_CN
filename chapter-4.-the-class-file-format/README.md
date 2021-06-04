@@ -1,6 +1,6 @@
 # Chapter 4. The class File Format
 
-[4.1. The `ClassFile` Structure](4.1.-the-classfile-structure.md)
+#### [4.1. The `ClassFile` Structure](4.1.-the-classfile-structure.md)
 
 #### [4.2. The Internal Form of Names](4.2.-the-internal-form-of-names.md)
 
