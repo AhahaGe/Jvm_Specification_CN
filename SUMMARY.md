@@ -54,6 +54,7 @@
   * [5.6. Binding Native Method Implementations](chapter-5.-loading-linking-and-initializing/5.6.-binding-native-method-implementations.md)
   * [5.7. Java Virtual Machine Exit](chapter-5.-loading-linking-and-initializing/5.7.-java-virtual-machine-exit.md)
 * [Chapter 6. The Java Virtual Machine Instruction Set](chapter-6.-the-java-virtual-machine-instruction-set/README.md)
+  * [6.5. Instructions \(d\)](chapter-6.-the-java-virtual-machine-instruction-set/6.5.-instructions-d.md)
   * [6.5. Instructions \(a\)](chapter-6.-the-java-virtual-machine-instruction-set/6.5.-instructions.md)
   * [6.5. Instructions \(b\)](chapter-6.-the-java-virtual-machine-instruction-set/6.5.-instructions-ior-end.md)
   * [6.5. Instructions \(c\)](chapter-6.-the-java-virtual-machine-instruction-set/6.5.-instructions-f-invokevirtual.md)
