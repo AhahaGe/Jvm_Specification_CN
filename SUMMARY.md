@@ -18,6 +18,7 @@
   * [2.12. Class Libraries](chapter-2.-the-structure-of-the-java-virtual-machine/2.12.-class-libraries.md)
   * [2.13. Public Design, Private Implementation](chapter-2.-the-structure-of-the-java-virtual-machine/2.13.-public-design-private-implementation.md)
 * [Chapter 3. Compiling for the Java Virtual Machine](chapter-3.-compiling-for-the-java-virtual-machine/README.md)
+  * [3.3. Arithmetic](chapter-3.-compiling-for-the-java-virtual-machine/3.3.-arithmetic.md)
   * [3.4. Accessing the Run-Time Constant Pool](chapter-3.-compiling-for-the-java-virtual-machine/3.4.-accessing-the-run-time-constant-pool.md)
   * [3.5. More Control Examples](chapter-3.-compiling-for-the-java-virtual-machine/3.5.-more-control-examples.md)
   * [3.6. Receiving Arguments](chapter-3.-compiling-for-the-java-virtual-machine/3.6.-receiving-arguments.md)
