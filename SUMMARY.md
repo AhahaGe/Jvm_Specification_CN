@@ -46,6 +46,7 @@
   * [4.10. Verification of class Files](chapter-4.-the-class-file-format/4.10.-verification-of-class-files.md)
   * [4.11. Limitations of the Java Virtual Machine](chapter-4.-the-class-file-format/4.11.-limitations-of-the-java-virtual-machine.md)
 * [Chapter 5. Loading, Linking, and Initializing](chapter-5.-loading-linking-and-initializing/README.md)
+  * [5.2. Java Virtual Machine Startup](chapter-5.-loading-linking-and-initializing/5.2.-java-virtual-machine-startup.md)
   * [5.3. Creation and Loading](chapter-5.-loading-linking-and-initializing/5.3.-creation-and-loading.md)
   * [5.4. Linking](chapter-5.-loading-linking-and-initializing/5.4.-linking.md)
   * [5.5. Initialization](chapter-5.-loading-linking-and-initializing/5.5.-initialization.md)
