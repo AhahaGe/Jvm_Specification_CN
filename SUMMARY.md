@@ -4,6 +4,7 @@
 * [Preface to the Java SE 8 Edition](preface-to-the-java-se-8-edition.md)
 * [Chapter 1. Introduction](chapter-1.-introduction.md)
 * [Chapter 2. The Structure of the Java Virtual Machine](chapter-2.-the-structure-of-the-java-virtual-machine/README.md)
+  * [2.12. Class Libraries](chapter-2.-the-structure-of-the-java-virtual-machine/2.12.-class-libraries.md)
   * [2.13. Public Design, Private Implementation](chapter-2.-the-structure-of-the-java-virtual-machine/2.13.-public-design-private-implementation.md)
 * [Chapter 3. Compiling for the Java Virtual Machine](chapter-3.-compiling-for-the-java-virtual-machine.md)
 * [Chapter 4. The class File Format](chapter-4.-the-class-file-format/README.md)
