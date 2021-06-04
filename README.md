@@ -1,3 +1,4 @@
-# Jvm_Specification_CN
+# The Java® Virtual Machine Specification
 
-The Translation of [The Java® Virtual Machine Specification Java SE 8 Edition](https://docs.oracle.com/javase/specs/jvms/se8/html/).
+      Preface to the Java SE 8 Edition
+
