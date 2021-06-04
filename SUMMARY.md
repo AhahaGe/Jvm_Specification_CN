@@ -20,6 +20,7 @@
   * [4.10. Verification of class Files](chapter-4.-the-class-file-format/4.10.-verification-of-class-files.md)
   * [4.11. Limitations of the Java Virtual Machine](chapter-4.-the-class-file-format/4.11.-limitations-of-the-java-virtual-machine.md)
 * [Chapter 5. Loading, Linking, and Initializing](chapter-5.-loading-linking-and-initializing.md)
+* [Chapter 6. The Java Virtual Machine Instruction Set](chapter-6.-the-java-virtual-machine-instruction-set.md)
 * [Chapter 7. Opcode Mnemonics by Opcode](chapter-7.-opcode-mnemonics-by-opcode.md)
 * [Index](index.md)
 * [Appendix A. Limited License Grant](appendix-a.-limited-license-grant.md)
