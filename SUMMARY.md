@@ -18,6 +18,7 @@
   * [2.12. Class Libraries](chapter-2.-the-structure-of-the-java-virtual-machine/2.12.-class-libraries.md)
   * [2.13. Public Design, Private Implementation](chapter-2.-the-structure-of-the-java-virtual-machine/2.13.-public-design-private-implementation.md)
 * [Chapter 3. Compiling for the Java Virtual Machine](chapter-3.-compiling-for-the-java-virtual-machine/README.md)
+  * [3.5. More Control Examples](chapter-3.-compiling-for-the-java-virtual-machine/3.5.-more-control-examples.md)
   * [3.6. Receiving Arguments](chapter-3.-compiling-for-the-java-virtual-machine/3.6.-receiving-arguments.md)
   * [3.7. Invoking Methods](chapter-3.-compiling-for-the-java-virtual-machine/3.7.-invoking-methods.md)
   * [3.8. Working with Class Instances](chapter-3.-compiling-for-the-java-virtual-machine/3.8.-working-with-class-instances.md)
