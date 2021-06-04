@@ -1,30 +1,30 @@
 # Chapter 2. The Structure of the Java Virtual Machine
 
-## Chapter 2. The Structure of the Java Virtual Machine
-
 This document specifies an abstract machine. It does not describe any particular implementation of the Java Virtual Machine.
 
 To implement the Java Virtual Machine correctly, you need only be able to read the `class` file format and correctly perform the operations specified therein. Implementation details that are not part of the Java Virtual Machine's specification would unnecessarily constrain the creativity of implementors. For example, the memory layout of run-time data areas, the garbage-collection algorithm used, and any internal optimization of the Java Virtual Machine instructions \(for example, translating them into machine code\) are left to the discretion of the implementor.
 
 All references to Unicode in this specification are given with respect to _The Unicode Standard, Version 6.0.0_, available at `http://www.unicode.org/`.
 
-## 2.1. The `class` File Format
+### 2.1. The `class` File Format
 
 Compiled code to be executed by the Java Virtual Machine is represented using a hardware- and operating system-independent binary format, typically \(but not necessarily\) stored in a file, known as the `class` file format. The `class` file format precisely defines the representation of a class or interface, including details such as byte ordering that might be taken for granted in a platform-specific object file format.
 
 Chapter 4, "The `class` File Format", covers the `class` file format in detail.
 
+### 2.2. Data Types
+
 Like the Java programming language, the Java Virtual Machine operates on two kinds of types: _primitive types_ and _reference types_. There are, correspondingly, two kinds of values that can be stored in variables, passed as arguments, returned by methods, and operated upon: _primitive values_ and _reference values_.
 
-The Java Virtual Machine expects that nearly all type checking is done prior to run time, typically by a compiler, and does not have to be done by the Java Virtual Machine itself. Values of primitive types need not be tagged or otherwise be inspectable to determine their types at run time, or to be distinguished from values of reference types. Instead, the instruction set of the Java Virtual Machine distinguishes its operand types using instructions intended to operate on values of specific types. For instance, _iadd_, _ladd_, _fadd_, and _dadd_ are all Java Virtual Machine instructions that add two numeric values and produce numeric results, but each is specialized for its operand type: `int`, `long`, `float`, and `double`, respectively. For a summary of type support in the Java Virtual Machine instruction set, see [§2.11.1](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.11.1).
+The Java Virtual Machine expects that nearly all type checking is done prior to run time, typically by a compiler, and does not have to be done by the Java Virtual Machine itself. Values of primitive types need not be tagged or otherwise be inspectable to determine their types at run time, or to be distinguished from values of reference types. Instead, the instruction set of the Java Virtual Machine distinguishes its operand types using instructions intended to operate on values of specific types. For instance, _iadd_, _ladd_, _fadd_, and _dadd_ are all Java Virtual Machine instructions that add two numeric values and produce numeric results, but each is specialized for its operand type: `int`, `long`, `float`, and `double`, respectively. For a summary of type support in the Java Virtual Machine instruction set, see [§2.11.1](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.1).
 
 The Java Virtual Machine contains explicit support for objects. An object is either a dynamically allocated class instance or an array. A reference to an object is considered to have Java Virtual Machine type `reference`. Values of type `reference` can be thought of as pointers to objects. More than one reference to an object may exist. Objects are always operated on, passed, and tested via values of type `reference`.
 
-## 2.3. Primitive Types and Values
+### 2.3. Primitive Types and Values
 
-The primitive data types supported by the Java Virtual Machine are the _numeric types_, the `boolean` type \([§2.3.4](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.3.4)\), and the `returnAddress` type \([§2.3.3](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.3.3)\).
+The primitive data types supported by the Java Virtual Machine are the _numeric types_, the `boolean` type \([§2.3.4](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.3.4)\), and the `returnAddress` type \([§2.3.3](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.3.3)\).
 
-The numeric types consist of the _integral types_ \([§2.3.1](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.3.1)\) and the _floating-point types_ \([§2.3.2](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.3.2)\).
+The numeric types consist of the _integral types_ \([§2.3.1](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.3.1)\) and the _floating-point types_ \([§2.3.2](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.3.2)\).
 
 The integral types are:
 
@@ -45,7 +45,7 @@ The First Edition of _The Java® Virtual Machine Specification_ did not consider
 
 The values of the `returnAddress` type are pointers to the opcodes of Java Virtual Machine instructions. Of the primitive types, only the `returnAddress` type is not directly associated with a Java programming language type.
 
-### 2.3.1. Integral Types and Values
+#### 2.3.1. Integral Types and Values
 
 The values of the integral types of the Java Virtual Machine are:
 
@@ -55,7 +55,7 @@ The values of the integral types of the Java Virtual Machine are:
 * For `long`, from -9223372036854775808 to 9223372036854775807 \(-263 to 263 - 1\), inclusive
 * For `char`, from 0 to 65535 inclusive
 
-### 2.3.2. Floating-Point Types, Value Sets, and Values
+#### 2.3.2. Floating-Point Types, Value Sets, and Values
 
 The floating-point types are `float` and `double`, which are conceptually associated with the 32-bit single-precision and 64-bit double-precision format IEEE 754 values and operations as specified in _IEEE Standard for Binary Floating-Point Arithmetic_ \(ANSI/IEEE Std. 754-1985, New York\).
 
@@ -65,7 +65,7 @@ Every implementation of the Java Virtual Machine is required to support two stan
 
 The finite nonzero values of any floating-point value set can all be expressed in the form _s_ ⋅ _m_ ⋅ 2\(_e_ − _N_ + 1\), where _s_ is +1 or −1, _m_ is a positive integer less than 2_N_, and _e_ is an integer between _Emin_ = −\(2_K_−1−2\) and _Emax_ = 2_K_−1−1, inclusive, and where _N_ and _K_ are parameters that depend on the value set. Some values can be represented in this form in more than one way; for example, supposing that a value _v_ in a value set might be represented in this form using certain values for _s_, _m_, and _e_, then if it happened that _m_ were even and _e_ were less than 2_K_-1, one could halve _m_ and increase _e_ by 1 to produce a second representation for the same value _v_. A representation in this form is called _normalized_ if _m_ ≥ 2_N_-1; otherwise the representation is said to be _denormalized_. If a value in a value set cannot be represented in such a way that _m_ ≥ 2_N_-1, then the value is said to be a _denormalized value_, because it has no normalized representation.
 
-The constraints on the parameters _N_ and _K_ \(and on the derived parameters _Emin_ and _Emax_\) for the two required and two optional floating-point value sets are summarized in [Table 2.3.2-A](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.3.2-140-A).
+The constraints on the parameters _N_ and _K_ \(and on the derived parameters _Emin_ and _Emax_\) for the two required and two optional floating-point value sets are summarized in [Table 2.3.2-A](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.3.2-140-A).
 
 **Table 2.3.2-A. Floating-point value set parameters**
 
@@ -76,13 +76,13 @@ The constraints on the parameters _N_ and _K_ \(and on the derived parameters _E
 | _Emax_ | +127 | ≥ +1023 | +1023 | ≥ +16383 |
 | _Emin_ | -126 | ≤ -1022 | -1022 | ≤ -16382 |
 
-Where one or both extended-exponent value sets are supported by an implementation, then for each supported extended-exponent value set there is a specific implementation-dependent constant _K_, whose value is constrained by [Table 2.3.2-A](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.3.2-140-A); this value _K_ in turn dictates the values for _Emin_ and _Emax_.
+Where one or both extended-exponent value sets are supported by an implementation, then for each supported extended-exponent value set there is a specific implementation-dependent constant _K_, whose value is constrained by [Table 2.3.2-A](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.3.2-140-A); this value _K_ in turn dictates the values for _Emin_ and _Emax_.
 
 Each of the four value sets includes not only the finite nonzero values that are ascribed to it above, but also the five values positive zero, negative zero, positive infinity, negative infinity, and NaN.
 
-Note that the constraints in [Table 2.3.2-A](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.3.2-140-A) are designed so that every element of the float value set is necessarily also an element of the float-extended-exponent value set, the double value set, and the double-extended-exponent value set. Likewise, each element of the double value set is necessarily also an element of the double-extended-exponent value set. Each extended-exponent value set has a larger range of exponent values than the corresponding standard value set, but does not have more precision.
+Note that the constraints in [Table 2.3.2-A](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.3.2-140-A) are designed so that every element of the float value set is necessarily also an element of the float-extended-exponent value set, the double value set, and the double-extended-exponent value set. Likewise, each element of the double value set is necessarily also an element of the double-extended-exponent value set. Each extended-exponent value set has a larger range of exponent values than the corresponding standard value set, but does not have more precision.
 
-The elements of the float value set are exactly the values that can be represented using the single floating-point format defined in the IEEE 754 standard, except that there is only one NaN value \(IEEE 754 specifies 224-2 distinct NaN values\). The elements of the double value set are exactly the values that can be represented using the double floating-point format defined in the IEEE 754 standard, except that there is only one NaN value \(IEEE 754 specifies 253-2 distinct NaN values\). Note, however, that the elements of the float-extended-exponent and double-extended-exponent value sets defined here do _not_ correspond to the values that can be represented using IEEE 754 single extended and double extended formats, respectively. This specification does not mandate a specific representation for the values of the floating-point value sets except where floating-point values must be represented in the `class` file format \([§4.4.4](chapter-4.-the-class-file-format/#jvms-4.4.4), [§4.4.5](chapter-4.-the-class-file-format/#jvms-4.4.5)\).
+The elements of the float value set are exactly the values that can be represented using the single floating-point format defined in the IEEE 754 standard, except that there is only one NaN value \(IEEE 754 specifies 224-2 distinct NaN values\). The elements of the double value set are exactly the values that can be represented using the double floating-point format defined in the IEEE 754 standard, except that there is only one NaN value \(IEEE 754 specifies 253-2 distinct NaN values\). Note, however, that the elements of the float-extended-exponent and double-extended-exponent value sets defined here do _not_ correspond to the values that can be represented using IEEE 754 single extended and double extended formats, respectively. This specification does not mandate a specific representation for the values of the floating-point value sets except where floating-point values must be represented in the `class` file format \([§4.4.4](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4.4), [§4.4.5](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4.5)\).
 
 The float, float-extended-exponent, double, and double-extended-exponent value sets are not types. It is always correct for an implementation of the Java Virtual Machine to use an element of the float value set to represent a value of type `float`; however, it may be permissible in certain contexts for an implementation to use an element of the float-extended-exponent value set instead. Similarly, it is always correct for an implementation to use an element of the double value set to represent a value of type `double`; however, it may be permissible in certain contexts for an implementation to use an element of the double-extended-exponent value set instead.
 
@@ -92,19 +92,21 @@ Floating-point positive zero and floating-point negative zero compare as equal, 
 
 NaNs are _unordered_, so numerical comparisons and tests for numerical equality have the value `false` if either or both of their operands are NaN. In particular, a test for numerical equality of a value against itself has the value `false` if and only if the value is NaN. A test for numerical inequality has the value `true` if either operand is NaN.
 
-### 2.3.3. The `returnAddress` Type and Values
+#### 2.3.3. The `returnAddress` Type and Values
 
-The `returnAddress` type is used by the Java Virtual Machine's _jsr_, _ret_, and _jsr\_w_ instructions \([§_jsr_](), [§_ret_](), [§_jsr\_w_]()\). The values of the `returnAddress` type are pointers to the opcodes of Java Virtual Machine instructions. Unlike the numeric primitive types, the `returnAddress` type does not correspond to any Java programming language type and cannot be modified by the running program.
+The `returnAddress` type is used by the Java Virtual Machine's _jsr_, _ret_, and _jsr\_w_ instructions \([§_jsr_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.jsr), [§_ret_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.ret), [§_jsr\_w_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.jsr_w)\). The values of the `returnAddress` type are pointers to the opcodes of Java Virtual Machine instructions. Unlike the numeric primitive types, the `returnAddress` type does not correspond to any Java programming language type and cannot be modified by the running program.
+
+#### 2.3.4. The `boolean` Type
 
 Although the Java Virtual Machine defines a `boolean` type, it only provides very limited support for it. There are no Java Virtual Machine instructions solely dedicated to operations on `boolean` values. Instead, expressions in the Java programming language that operate on `boolean` values are compiled to use values of the Java Virtual Machine `int` data type.
 
-The Java Virtual Machine does directly support `boolean` arrays. Its _newarray_ instruction \([§_newarray_]()\) enables creation of `boolean` arrays. Arrays of type `boolean` are accessed and modified using the `byte` array instructions _baload_ and _bastore_ \([§_baload_](), [§_bastore_]()\).
+The Java Virtual Machine does directly support `boolean` arrays. Its _newarray_ instruction \([§_newarray_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.newarray)\) enables creation of `boolean` arrays. Arrays of type `boolean` are accessed and modified using the `byte` array instructions _baload_ and _bastore_ \([§_baload_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.baload), [§_bastore_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.bastore)\).
 
 In Oracle’s Java Virtual Machine implementation, `boolean` arrays in the Java programming language are encoded as Java Virtual Machine `byte` arrays, using 8 bits per `boolean` element.
 
 The Java Virtual Machine encodes `boolean` array components using `1` to represent `true` and `0` to represent `false`. Where Java programming language `boolean` values are mapped by compilers to values of Java Virtual Machine type `int`, the compilers must use the same encoding.
 
-## 2.4. Reference Types and Values
+### 2.4. Reference Types and Values
 
 There are three kinds of `reference` types: class types, array types, and interface types. Their values are references to dynamically created class instances, arrays, or class instances or arrays that implement interfaces, respectively.
 
@@ -114,13 +116,17 @@ A `reference` value may also be the special null reference, a reference to no ob
 
 This specification does not mandate a concrete value encoding `null`.
 
+### 2.5. Run-Time Data Areas
+
 The Java Virtual Machine defines various run-time data areas that are used during execution of a program. Some of these data areas are created on Java Virtual Machine start-up and are destroyed only when the Java Virtual Machine exits. Other data areas are per thread. Per-thread data areas are created when a thread is created and destroyed when the thread exits.
 
-The Java Virtual Machine can support many threads of execution at once \(JLS §17\). Each Java Virtual Machine thread has its own `pc` \(program counter\) register. At any point, each Java Virtual Machine thread is executing the code of a single method, namely the current method \([§2.6](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.6)\) for that thread. If that method is not `native`, the `pc` register contains the address of the Java Virtual Machine instruction currently being executed. If the method currently being executed by the thread is `native`, the value of the Java Virtual Machine's `pc` register is undefined. The Java Virtual Machine's `pc` register is wide enough to hold a `returnAddress` or a native pointer on the specific platform.
+#### 2.5.1. The `pc` Register
 
-### 2.5.2. Java Virtual Machine Stacks
+The Java Virtual Machine can support many threads of execution at once \(JLS §17\). Each Java Virtual Machine thread has its own `pc` \(program counter\) register. At any point, each Java Virtual Machine thread is executing the code of a single method, namely the current method \([§2.6](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6)\) for that thread. If that method is not `native`, the `pc` register contains the address of the Java Virtual Machine instruction currently being executed. If the method currently being executed by the thread is `native`, the value of the Java Virtual Machine's `pc` register is undefined. The Java Virtual Machine's `pc` register is wide enough to hold a `returnAddress` or a native pointer on the specific platform.
 
-Each Java Virtual Machine thread has a private _Java Virtual Machine stack_, created at the same time as the thread. A Java Virtual Machine stack stores frames \([§2.6](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.6)\). A Java Virtual Machine stack is analogous to the stack of a conventional language such as C: it holds local variables and partial results, and plays a part in method invocation and return. Because the Java Virtual Machine stack is never manipulated directly except to push and pop frames, frames may be heap allocated. The memory for a Java Virtual Machine stack does not need to be contiguous.
+#### 2.5.2. Java Virtual Machine Stacks
+
+Each Java Virtual Machine thread has a private _Java Virtual Machine stack_, created at the same time as the thread. A Java Virtual Machine stack stores frames \([§2.6](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6)\). A Java Virtual Machine stack is analogous to the stack of a conventional language such as C: it holds local variables and partial results, and plays a part in method invocation and return. Because the Java Virtual Machine stack is never manipulated directly except to push and pop frames, frames may be heap allocated. The memory for a Java Virtual Machine stack does not need to be contiguous.
 
 In the First Edition of _The Java® Virtual Machine Specification_, the Java Virtual Machine stack was known as the _Java stack_.
 
@@ -133,6 +139,8 @@ The following exceptional conditions are associated with Java Virtual Machine st
 * If the computation in a thread requires a larger Java Virtual Machine stack than is permitted, the Java Virtual Machine throws a `StackOverflowError`.
 * If Java Virtual Machine stacks can be dynamically expanded, and expansion is attempted but insufficient memory can be made available to effect the expansion, or if insufficient memory can be made available to create the initial Java Virtual Machine stack for a new thread, the Java Virtual Machine throws an `OutOfMemoryError`.
 
+#### 2.5.3. Heap
+
 The Java Virtual Machine has a _heap_ that is shared among all Java Virtual Machine threads. The heap is the run-time data area from which memory for all class instances and arrays is allocated.
 
 The heap is created on virtual machine start-up. Heap storage for objects is reclaimed by an automatic storage management system \(known as a _garbage collector_\); objects are never explicitly deallocated. The Java Virtual Machine assumes no particular type of automatic storage management system, and the storage management technique may be chosen according to the implementor's system requirements. The heap may be of a fixed size or may be expanded as required by the computation and may be contracted if a larger heap becomes unnecessary. The memory for the heap does not need to be contiguous.
@@ -143,7 +151,9 @@ The following exceptional condition is associated with the heap:
 
 * If a computation requires more heap than can be made available by the automatic storage management system, the Java Virtual Machine throws an `OutOfMemoryError`.
 
-The Java Virtual Machine has a _method area_ that is shared among all Java Virtual Machine threads. The method area is analogous to the storage area for compiled code of a conventional language or analogous to the "text" segment in an operating system process. It stores per-class structures such as the run-time constant pool, field and method data, and the code for methods and constructors, including the special methods \([§2.9](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.9)\) used in class and instance initialization and interface initialization.
+#### 2.5.4. Method Area
+
+The Java Virtual Machine has a _method area_ that is shared among all Java Virtual Machine threads. The method area is analogous to the storage area for compiled code of a conventional language or analogous to the "text" segment in an operating system process. It stores per-class structures such as the run-time constant pool, field and method data, and the code for methods and constructors, including the special methods \([§2.9](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.9)\) used in class and instance initialization and interface initialization.
 
 The method area is created on virtual machine start-up. Although the method area is logically part of the heap, simple implementations may choose not to either garbage collect or compact it. This specification does not mandate the location of the method area or the policies used to manage compiled code. The method area may be of a fixed size or may be expanded as required by the computation and may be contracted if a larger method area becomes unnecessary. The memory for the method area does not need to be contiguous.
 
@@ -153,19 +163,19 @@ The following exceptional condition is associated with the method area:
 
 * If memory in the method area cannot be made available to satisfy an allocation request, the Java Virtual Machine throws an `OutOfMemoryError`.
 
-### 2.5.5. Run-Time Constant Pool
+#### 2.5.5. Run-Time Constant Pool
 
-A _run-time constant pool_ is a per-class or per-interface run-time representation of the `constant_pool` table in a `class` file \([§4.4](chapter-4.-the-class-file-format/#jvms-4.4)\). It contains several kinds of constants, ranging from numeric literals known at compile-time to method and field references that must be resolved at run-time. The run-time constant pool serves a function similar to that of a symbol table for a conventional programming language, although it contains a wider range of data than a typical symbol table.
+A _run-time constant pool_ is a per-class or per-interface run-time representation of the `constant_pool` table in a `class` file \([§4.4](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4)\). It contains several kinds of constants, ranging from numeric literals known at compile-time to method and field references that must be resolved at run-time. The run-time constant pool serves a function similar to that of a symbol table for a conventional programming language, although it contains a wider range of data than a typical symbol table.
 
-Each run-time constant pool is allocated from the Java Virtual Machine's method area \([§2.5.4](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.5.4)\). The run-time constant pool for a class or interface is constructed when the class or interface is created \([§5.3](chapter-5.-loading-linking-and-initializing.md#jvms-5.3)\) by the Java Virtual Machine.
+Each run-time constant pool is allocated from the Java Virtual Machine's method area \([§2.5.4](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4)\). The run-time constant pool for a class or interface is constructed when the class or interface is created \([§5.3](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-5.html#jvms-5.3)\) by the Java Virtual Machine.
 
 The following exceptional condition is associated with the construction of the run-time constant pool for a class or interface:
 
 * When creating a class or interface, if the construction of the run-time constant pool requires more memory than can be made available in the method area of the Java Virtual Machine, the Java Virtual Machine throws an `OutOfMemoryError`.
 
-See [§5 \(Loading, Linking, and Initializing\)](chapter-5.-loading-linking-and-initializing.md) for information about the construction of the run-time constant pool.
+See [§5 \(Loading, Linking, and Initializing\)](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-5.html) for information about the construction of the run-time constant pool.
 
-### 2.5.6. Native Method Stacks
+#### 2.5.6. Native Method Stacks
 
 An implementation of the Java Virtual Machine may use conventional stacks, colloquially called "C stacks," to support `native` methods \(methods written in a language other than the Java programming language\). Native method stacks may also be used by the implementation of an interpreter for the Java Virtual Machine's instruction set in a language such as C. Java Virtual Machine implementations that cannot load `native` methods and that do not themselves rely on conventional stacks need not supply native method stacks. If supplied, native method stacks are typically allocated per thread when each thread is created.
 
@@ -178,13 +188,15 @@ The following exceptional conditions are associated with native method stacks:
 * If the computation in a thread requires a larger native method stack than is permitted, the Java Virtual Machine throws a `StackOverflowError`.
 * If native method stacks can be dynamically expanded and native method stack expansion is attempted but insufficient memory can be made available, or if insufficient memory can be made available to create the initial native method stack for a new thread, the Java Virtual Machine throws an `OutOfMemoryError`.
 
+### 2.6. Frames
+
 A _frame_ is used to store data and partial results, as well as to perform dynamic linking, return values for methods, and dispatch exceptions.
 
-A new frame is created each time a method is invoked. A frame is destroyed when its method invocation completes, whether that completion is normal or abrupt \(it throws an uncaught exception\). Frames are allocated from the Java Virtual Machine stack \([§2.5.2](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.5.2)\) of the thread creating the frame. Each frame has its own array of local variables \([§2.6.1](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.6.1)\), its own operand stack \([§2.6.2](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.6.2)\), and a reference to the run-time constant pool \([§2.5.5](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.5.5)\) of the class of the current method.
+A new frame is created each time a method is invoked. A frame is destroyed when its method invocation completes, whether that completion is normal or abrupt \(it throws an uncaught exception\). Frames are allocated from the Java Virtual Machine stack \([§2.5.2](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.2)\) of the thread creating the frame. Each frame has its own array of local variables \([§2.6.1](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6.1)\), its own operand stack \([§2.6.2](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6.2)\), and a reference to the run-time constant pool \([§2.5.5](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.5)\) of the class of the current method.
 
 A frame may be extended with additional implementation-specific information, such as debugging information.
 
-The sizes of the local variable array and the operand stack are determined at compile-time and are supplied along with the code for the method associated with the frame \([§4.7.3](chapter-4.-the-class-file-format/#jvms-4.7.3)\). Thus the size of the frame data structure depends only on the implementation of the Java Virtual Machine, and the memory for these structures can be allocated simultaneously on method invocation.
+The sizes of the local variable array and the operand stack are determined at compile-time and are supplied along with the code for the method associated with the frame \([§4.7.3](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.3)\). Thus the size of the frame data structure depends only on the implementation of the Java Virtual Machine, and the memory for these structures can be allocated simultaneously on method invocation.
 
 Only one frame, the frame for the executing method, is active at any point in a given thread of control. This frame is referred to as the _current frame_, and its method is known as the _current method_. The class in which the current method is defined is the _current class_. Operations on local variables and the operand stack are typically with reference to the current frame.
 
@@ -192,7 +204,9 @@ A frame ceases to be current if its method invokes another method or if its meth
 
 Note that a frame created by a thread is local to that thread and cannot be referenced by any other thread.
 
-Each frame \([§2.6](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.6)\) contains an array of variables known as its _local variables_. The length of the local variable array of a frame is determined at compile-time and supplied in the binary representation of a class or interface along with the code for the method associated with the frame \([§4.7.3](chapter-4.-the-class-file-format/#jvms-4.7.3)\).
+#### 2.6.1. Local Variables
+
+Each frame \([§2.6](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6)\) contains an array of variables known as its _local variables_. The length of the local variable array of a frame is determined at compile-time and supplied in the binary representation of a class or interface along with the code for the method associated with the frame \([§4.7.3](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.3)\).
 
 A single local variable can hold a value of type `boolean`, `byte`, `char`, `short`, `int`, `float`, `reference`, or `returnAddress`. A pair of local variables can hold a value of type `long` or `double`.
 
@@ -204,45 +218,49 @@ The Java Virtual Machine does not require _n_ to be even. In intuitive terms, va
 
 The Java Virtual Machine uses local variables to pass parameters on method invocation. On class method invocation, any parameters are passed in consecutive local variables starting from local variable _0_. On instance method invocation, local variable _0_ is always used to pass a reference to the object on which the instance method is being invoked \(`this` in the Java programming language\). Any parameters are subsequently passed in consecutive local variables starting from local variable _1_.
 
-Each frame \([§2.6](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.6)\) contains a last-in-first-out \(LIFO\) stack known as its _operand stack_. The maximum depth of the operand stack of a frame is determined at compile-time and is supplied along with the code for the method associated with the frame \([§4.7.3](chapter-4.-the-class-file-format/#jvms-4.7.3)\).
+#### 2.6.2. Operand Stacks
+
+Each frame \([§2.6](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6)\) contains a last-in-first-out \(LIFO\) stack known as its _operand stack_. The maximum depth of the operand stack of a frame is determined at compile-time and is supplied along with the code for the method associated with the frame \([§4.7.3](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.3)\).
 
 Where it is clear by context, we will sometimes refer to the operand stack of the current frame as simply the operand stack.
 
 The operand stack is empty when the frame that contains it is created. The Java Virtual Machine supplies instructions to load constants or values from local variables or fields onto the operand stack. Other Java Virtual Machine instructions take operands from the operand stack, operate on them, and push the result back onto the operand stack. The operand stack is also used to prepare parameters to be passed to methods and to receive method results.
 
-For example, the _iadd_ instruction \([§_iadd_]()\) adds two `int` values together. It requires that the `int` values to be added be the top two values of the operand stack, pushed there by previous instructions. Both of the `int` values are popped from the operand stack. They are added, and their sum is pushed back onto the operand stack. Subcomputations may be nested on the operand stack, resulting in values that can be used by the encompassing computation.
+For example, the _iadd_ instruction \([§_iadd_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.iadd)\) adds two `int` values together. It requires that the `int` values to be added be the top two values of the operand stack, pushed there by previous instructions. Both of the `int` values are popped from the operand stack. They are added, and their sum is pushed back onto the operand stack. Subcomputations may be nested on the operand stack, resulting in values that can be used by the encompassing computation.
 
 Each entry on the operand stack can hold a value of any Java Virtual Machine type, including a value of type `long` or type `double`.
 
-Values from the operand stack must be operated upon in ways appropriate to their types. It is not possible, for example, to push two `int` values and subsequently treat them as a `long` or to push two `float` values and subsequently add them with an _iadd_ instruction. A small number of Java Virtual Machine instructions \(the _dup_ instructions \([§_dup_]()\) and _swap_ \([§_swap_]()\)\) operate on run-time data areas as raw values without regard to their specific types; these instructions are defined in such a way that they cannot be used to modify or break up individual values. These restrictions on operand stack manipulation are enforced through `class` file verification \([§4.10](chapter-4.-the-class-file-format/#jvms-4.10)\).
+Values from the operand stack must be operated upon in ways appropriate to their types. It is not possible, for example, to push two `int` values and subsequently treat them as a `long` or to push two `float` values and subsequently add them with an _iadd_ instruction. A small number of Java Virtual Machine instructions \(the _dup_ instructions \([§_dup_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.dup)\) and _swap_ \([§_swap_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.swap)\)\) operate on run-time data areas as raw values without regard to their specific types; these instructions are defined in such a way that they cannot be used to modify or break up individual values. These restrictions on operand stack manipulation are enforced through `class` file verification \([§4.10](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.10)\).
 
 At any point in time, an operand stack has an associated depth, where a value of type `long` or `double` contributes two units to the depth and a value of any other type contributes one unit.
 
-Each frame \([§2.6](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.6)\) contains a reference to the run-time constant pool \([§2.5.5](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.5.5)\) for the type of the current method to support _dynamic linking_ of the method code. The `class` file code for a method refers to methods to be invoked and variables to be accessed via symbolic references. Dynamic linking translates these symbolic method references into concrete method references, loading classes as necessary to resolve as-yet-undefined symbols, and translates variable accesses into appropriate offsets in storage structures associated with the run-time location of these variables.
+#### 2.6.3. Dynamic Linking
+
+Each frame \([§2.6](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6)\) contains a reference to the run-time constant pool \([§2.5.5](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.5)\) for the type of the current method to support _dynamic linking_ of the method code. The `class` file code for a method refers to methods to be invoked and variables to be accessed via symbolic references. Dynamic linking translates these symbolic method references into concrete method references, loading classes as necessary to resolve as-yet-undefined symbols, and translates variable accesses into appropriate offsets in storage structures associated with the run-time location of these variables.
 
 This late binding of the methods and variables makes changes in other classes that a method uses less likely to break this code.
 
-### 2.6.4. Normal Method Invocation Completion
+#### 2.6.4. Normal Method Invocation Completion
 
-A method invocation _completes normally_ if that invocation does not cause an exception \([§2.10](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.10)\) to be thrown, either directly from the Java Virtual Machine or as a result of executing an explicit `throw` statement. If the invocation of the current method completes normally, then a value may be returned to the invoking method. This occurs when the invoked method executes one of the return instructions \([§2.11.8](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.11.8)\), the choice of which must be appropriate for the type of the value being returned \(if any\).
+A method invocation _completes normally_ if that invocation does not cause an exception \([§2.10](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.10)\) to be thrown, either directly from the Java Virtual Machine or as a result of executing an explicit `throw` statement. If the invocation of the current method completes normally, then a value may be returned to the invoking method. This occurs when the invoked method executes one of the return instructions \([§2.11.8](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.8)\), the choice of which must be appropriate for the type of the value being returned \(if any\).
 
-The current frame \([§2.6](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.6)\) is used in this case to restore the state of the invoker, including its local variables and operand stack, with the program counter of the invoker appropriately incremented to skip past the method invocation instruction. Execution then continues normally in the invoking method's frame with the returned value \(if any\) pushed onto the operand stack of that frame.
+The current frame \([§2.6](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6)\) is used in this case to restore the state of the invoker, including its local variables and operand stack, with the program counter of the invoker appropriately incremented to skip past the method invocation instruction. Execution then continues normally in the invoking method's frame with the returned value \(if any\) pushed onto the operand stack of that frame.
 
-### 2.6.5. Abrupt Method Invocation Completion
+#### 2.6.5. Abrupt Method Invocation Completion
 
-A method invocation _completes abruptly_ if execution of a Java Virtual Machine instruction within the method causes the Java Virtual Machine to throw an exception \([§2.10](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.10)\), and that exception is not handled within the method. Execution of an _athrow_ instruction \([§_athrow_]()\) also causes an exception to be explicitly thrown and, if the exception is not caught by the current method, results in abrupt method invocation completion. A method invocation that completes abruptly never returns a value to its invoker.
+A method invocation _completes abruptly_ if execution of a Java Virtual Machine instruction within the method causes the Java Virtual Machine to throw an exception \([§2.10](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.10)\), and that exception is not handled within the method. Execution of an _athrow_ instruction \([§_athrow_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.athrow)\) also causes an exception to be explicitly thrown and, if the exception is not caught by the current method, results in abrupt method invocation completion. A method invocation that completes abruptly never returns a value to its invoker.
 
-## 2.7. Representation of Objects
+### 2.7. Representation of Objects
 
 The Java Virtual Machine does not mandate any particular internal structure for objects.
 
 In some of Oracle’s implementations of the Java Virtual Machine, a reference to a class instance is a pointer to a _handle_ that is itself a pair of pointers: one to a table containing the methods of the object and a pointer to the `Class` object that represents the type of the object, and the other to the memory allocated from the heap for the object data.
 
-## 2.8. Floating-Point Arithmetic
+### 2.8. Floating-Point Arithmetic
 
 The Java Virtual Machine incorporates a subset of the floating-point arithmetic specified in _IEEE Standard for Binary Floating-Point Arithmetic_ \(ANSI/IEEE Std. 754-1985, New York\).
 
-### 2.8.1. Java Virtual Machine Floating-Point Arithmetic and IEEE 754
+#### 2.8.1. Java Virtual Machine Floating-Point Arithmetic and IEEE 754
 
 The key differences between the floating-point arithmetic supported by the Java Virtual Machine and the IEEE 754 standard are:
 
@@ -251,19 +269,19 @@ The key differences between the floating-point arithmetic supported by the Java 
 * The rounding operations of the Java Virtual Machine always use IEEE 754 round to nearest mode. Inexact results are rounded to the nearest representable value, with ties going to the value with a zero least-significant bit. This is the IEEE 754 default mode. But Java Virtual Machine instructions that convert values of floating-point types to values of integral types round toward zero. The Java Virtual Machine does not give any means to change the floating-point rounding mode.
 * The Java Virtual Machine does not support either the IEEE 754 single extended or double extended format, except insofar as the double and double-extended-exponent value sets may be said to support the single extended format. The float-extended-exponent and double-extended-exponent value sets, which may optionally be supported, do not correspond to the values of the IEEE 754 extended formats: the IEEE 754 extended formats require extended precision as well as extended exponent range.
 
-### 2.8.2. Floating-Point Modes
+#### 2.8.2. Floating-Point Modes
 
-Every method has a _floating-point mode_, which is either _FP-strict_ or _not FP-strict_. The floating-point mode of a method is determined by the setting of the `ACC_STRICT` flag of the `access_flags` item of the `method_info` structure \([§4.6](chapter-4.-the-class-file-format/#jvms-4.6)\) defining the method. A method for which this flag is set is FP-strict; otherwise, the method is not FP-strict.
+Every method has a _floating-point mode_, which is either _FP-strict_ or _not FP-strict_. The floating-point mode of a method is determined by the setting of the `ACC_STRICT` flag of the `access_flags` item of the `method_info` structure \([§4.6](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.6)\) defining the method. A method for which this flag is set is FP-strict; otherwise, the method is not FP-strict.
 
 Note that this mapping of the `ACC_STRICT` flag implies that methods in classes compiled by a compiler in JDK release 1.1 or earlier are effectively not FP-strict.
 
 We will refer to an operand stack as having a given floating-point mode when the method whose invocation created the frame containing the operand stack has that floating-point mode. Similarly, we will refer to a Java Virtual Machine instruction as having a given floating-point mode when the method containing that instruction has that floating-point mode.
 
-If a float-extended-exponent value set is supported \([§2.3.2](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.3.2)\), values of type `float` on an operand stack that is not FP-strict may range over that value set except where prohibited by value set conversion \([§2.8.3](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.8.3)\). If a double-extended-exponent value set is supported \([§2.3.2](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.3.2)\), values of type `double` on an operand stack that is not FP-strict may range over that value set except where prohibited by value set conversion.
+If a float-extended-exponent value set is supported \([§2.3.2](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.3.2)\), values of type `float` on an operand stack that is not FP-strict may range over that value set except where prohibited by value set conversion \([§2.8.3](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.8.3)\). If a double-extended-exponent value set is supported \([§2.3.2](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.3.2)\), values of type `double` on an operand stack that is not FP-strict may range over that value set except where prohibited by value set conversion.
 
 In all other contexts, whether on the operand stack or elsewhere, and regardless of floating-point mode, floating-point values of type `float` and `double` may only range over the float value set and double value set, respectively. In particular, class and instance fields, array elements, local variables, and method parameters may only contain values drawn from the standard value sets.
 
-### 2.8.3. Value Set Conversion
+#### 2.8.3. Value Set Conversion
 
 An implementation of the Java Virtual Machine that supports an extended floating-point value set is permitted or required, under specified circumstances, to map a value of the associated floating-point type between the extended and the standard value sets. Such a _value set conversion_ is not a type conversion, but a mapping between the value sets associated with the same type.
 
@@ -283,34 +301,38 @@ Not all values from an extended-exponent value set can be mapped exactly to a va
 
 Value set conversion preserves infinities and NaNs and cannot change the sign of the value being converted. Value set conversion has no effect on a value that is not of a floating-point type.
 
-At the level of the Java Virtual Machine, every constructor written in the Java programming language \(JLS §8.8\) appears as an _instance initialization method_ that has the special name. This name is supplied by a compiler. Because the name is not a valid identifier, it cannot be used directly in a program written in the Java programming language. Instance initialization methods may be invoked only within the Java Virtual Machine by the _invokespecial_ instruction \([§_invokespecial_]()\), and they may be invoked only on uninitialized class instances. An instance initialization method takes on the access permissions \(JLS §6.6\) of the constructor from which it was derived.
+### 2.9. Special Methods
 
-A class or interface has at most one _class or interface initialization method_ and is initialized \([§5.5](chapter-5.-loading-linking-and-initializing.md#jvms-5.5)\) by invoking that method. The initialization method of a class or interface has the special name, takes no arguments, and is void \([§4.3.3](chapter-4.-the-class-file-format/#jvms-4.3.3)\).
+At the level of the Java Virtual Machine, every constructor written in the Java programming language \(JLS §8.8\) appears as an _instance initialization method_ that has the special name `<init>`. This name is supplied by a compiler. Because the name `<init>` is not a valid identifier, it cannot be used directly in a program written in the Java programming language. Instance initialization methods may be invoked only within the Java Virtual Machine by the _invokespecial_ instruction \([§_invokespecial_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.invokespecial)\), and they may be invoked only on uninitialized class instances. An instance initialization method takes on the access permissions \(JLS §6.6\) of the constructor from which it was derived.
 
-Other methods named in a `class` file are of no consequence. They are not class or interface initialization methods. They cannot be invoked by any Java Virtual Machine instruction and are never invoked by the Java Virtual Machine itself.
+A class or interface has at most one _class or interface initialization method_ and is initialized \([§5.5](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-5.html#jvms-5.5)\) by invoking that method. The initialization method of a class or interface has the special name `<clinit>`, takes no arguments, and is void \([§4.3.3](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.3.3)\).
 
-In a `class` file whose version number is 51.0 or above, the method must additionally have its `ACC_STATIC` flag \([§4.6](chapter-4.-the-class-file-format/#jvms-4.6)\) set in order to be the class or interface initialization method.
+Other methods named `<clinit>` in a `class` file are of no consequence. They are not class or interface initialization methods. They cannot be invoked by any Java Virtual Machine instruction and are never invoked by the Java Virtual Machine itself.
 
-This requirement was introduced in Java SE 7. In a class file whose version number is 50.0 or below, a method named that is void and takes no arguments is considered the class or interface initialization method regardless of the setting of its `ACC_STATIC` flag.
+In a `class` file whose version number is 51.0 or above, the method must additionally have its `ACC_STATIC` flag \([§4.6](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.6)\) set in order to be the class or interface initialization method.
 
-The name is supplied by a compiler. Because the name is not a valid identifier, it cannot be used directly in a program written in the Java programming language. Class and interface initialization methods are invoked implicitly by the Java Virtual Machine; they are never invoked directly from any Java Virtual Machine instruction, but are invoked only indirectly as part of the class initialization process.
+This requirement was introduced in Java SE 7. In a class file whose version number is 50.0 or below, a method named `<clinit>` that is void and takes no arguments is considered the class or interface initialization method regardless of the setting of its `ACC_STATIC` flag.
+
+The name `<clinit>` is supplied by a compiler. Because the name `<clinit>` is not a valid identifier, it cannot be used directly in a program written in the Java programming language. Class and interface initialization methods are invoked implicitly by the Java Virtual Machine; they are never invoked directly from any Java Virtual Machine instruction, but are invoked only indirectly as part of the class initialization process.
 
 A method is _signature polymorphic_ if all of the following are true:
 
-*  It is declared in the `java.lang.invoke.MethodHandle` class.
-*  It has a single formal parameter of type `Object[]`.
-*  It has a return type of `Object`.
-*  It has the `ACC_VARARGS` and `ACC_NATIVE` flags set.
+* It is declared in the `java.lang.invoke.MethodHandle` class.
+* It has a single formal parameter of type `Object[]`.
+* It has a return type of `Object`.
+* It has the `ACC_VARARGS` and `ACC_NATIVE` flags set.
 
 In Java SE 8, the only signature polymorphic methods are the `invoke` and `invokeExact` methods of the class `java.lang.invoke.MethodHandle`.
 
-The Java Virtual Machine gives special treatment to signature polymorphic methods in the _invokevirtual_ instruction \([§_invokevirtual_]()\), in order to effect invocation of a _method handle_. A method handle is a strongly typed, directly executable reference to an underlying method, constructor, field, or similar low-level operation \([§5.4.3.5](chapter-5.-loading-linking-and-initializing.md#jvms-5.4.3.5)\), with optional transformations of arguments or return values. These transformations are quite general, and include such patterns as conversion, insertion, deletion, and substitution. See the `java.lang.invoke` package in the Java SE platform API for more information.
+The Java Virtual Machine gives special treatment to signature polymorphic methods in the _invokevirtual_ instruction \([§_invokevirtual_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.invokevirtual)\), in order to effect invocation of a _method handle_. A method handle is a strongly typed, directly executable reference to an underlying method, constructor, field, or similar low-level operation \([§5.4.3.5](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-5.html#jvms-5.4.3.5)\), with optional transformations of arguments or return values. These transformations are quite general, and include such patterns as conversion, insertion, deletion, and substitution. See the `java.lang.invoke` package in the Java SE platform API for more information.
+
+### 2.10. Exceptions
 
 An exception in the Java Virtual Machine is represented by an instance of the class `Throwable` or one of its subclasses. Throwing an exception results in an immediate nonlocal transfer of control from the point where the exception was thrown.
 
 Most exceptions occur synchronously as a result of an action by the thread in which they occur. An asynchronous exception, by contrast, can potentially occur at any point in the execution of a program. The Java Virtual Machine throws an exception for one of three reasons:
 
-* An _athrow_ instruction \([§_athrow_]()\) was executed.
+* An _athrow_ instruction \([§_athrow_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.athrow)\) was executed.
 * An abnormal execution condition was synchronously detected by the Java Virtual Machine. These exceptions are not thrown at an arbitrary point in the program, but only synchronously after execution of an instruction that either:
   * Specifies the exception as a possible result, such as:
     * When the instruction embodies an operation that violates the semantics of the Java programming language, for example indexing outside the bounds of an array.
@@ -321,7 +343,7 @@ Most exceptions occur synchronously as a result of an action by the thread in wh
   * The `stop` method of class `Thread` or `ThreadGroup` was invoked, or
   * An internal error occurred in the Java Virtual Machine implementation.
 
-  The `stop` methods may be invoked by one thread to affect another thread or all the threads in a specified thread group. They are asynchronous because they may occur at any point in the execution of the other thread or threads. An internal error is considered asynchronous \([§6.3]()\).
+  The `stop` methods may be invoked by one thread to affect another thread or all the threads in a specified thread group. They are asynchronous because they may occur at any point in the execution of the other thread or threads. An internal error is considered asynchronous \([§6.3](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.3)\).
 
 A Java Virtual Machine may permit a small but bounded amount of execution to occur before an asynchronous exception is thrown. This delay is permitted to allow optimized code to detect and throw these exceptions at points where it is practical to handle them while obeying the semantics of the Java programming language.
 
@@ -331,13 +353,13 @@ Exceptions thrown by the Java Virtual Machine are precise: when the transfer of 
 
 Each method in the Java Virtual Machine may be associated with zero or more _exception handlers_. An exception handler specifies the range of offsets into the Java Virtual Machine code implementing the method for which the exception handler is active, describes the type of exception that the exception handler is able to handle, and specifies the location of the code that is to handle that exception. An exception matches an exception handler if the offset of the instruction that caused the exception is in the range of offsets of the exception handler and the exception type is the same class as or a subclass of the class of exception that the exception handler handles. When an exception is thrown, the Java Virtual Machine searches for a matching exception handler in the current method. If a matching exception handler is found, the system branches to the exception handling code specified by the matched handler.
 
-If no such exception handler is found in the current method, the current method invocation completes abruptly \([§2.6.5](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.6.5)\). On abrupt completion, the operand stack and local variables of the current method invocation are discarded, and its frame is popped, reinstating the frame of the invoking method. The exception is then rethrown in the context of the invoker's frame and so on, continuing up the method invocation chain. If no suitable exception handler is found before the top of the method invocation chain is reached, the execution of the thread in which the exception was thrown is terminated.
+If no such exception handler is found in the current method, the current method invocation completes abruptly \([§2.6.5](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6.5)\). On abrupt completion, the operand stack and local variables of the current method invocation are discarded, and its frame is popped, reinstating the frame of the invoking method. The exception is then rethrown in the context of the invoker's frame and so on, continuing up the method invocation chain. If no suitable exception handler is found before the top of the method invocation chain is reached, the execution of the thread in which the exception was thrown is terminated.
 
-The order in which the exception handlers of a method are searched for a match is important. Within a `class` file, the exception handlers for each method are stored in a table \([§4.7.3](chapter-4.-the-class-file-format/#jvms-4.7.3)\). At run time, when an exception is thrown, the Java Virtual Machine searches the exception handlers of the current method in the order that they appear in the corresponding exception handler table in the `class` file, starting from the beginning of that table.
+The order in which the exception handlers of a method are searched for a match is important. Within a `class` file, the exception handlers for each method are stored in a table \([§4.7.3](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.3)\). At run time, when an exception is thrown, the Java Virtual Machine searches the exception handlers of the current method in the order that they appear in the corresponding exception handler table in the `class` file, starting from the beginning of that table.
 
-Note that the Java Virtual Machine does not enforce nesting of or any ordering of the exception table entries of a method. The exception handling semantics of the Java programming language are implemented only through cooperation with the compiler \([§3.12](chapter-3.-compiling-for-the-java-virtual-machine.md#jvms-3.12)\). When `class` files are generated by some other means, the defined search procedure ensures that all Java Virtual Machine implementations will behave consistently.
+Note that the Java Virtual Machine does not enforce nesting of or any ordering of the exception table entries of a method. The exception handling semantics of the Java programming language are implemented only through cooperation with the compiler \([§3.12](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-3.html#jvms-3.12)\). When `class` files are generated by some other means, the defined search procedure ensures that all Java Virtual Machine implementations will behave consistently.
 
-## 2.11. Instruction Set Summary
+### 2.11. Instruction Set Summary
 
 A Java Virtual Machine instruction consists of a one-byte _opcode_ specifying the operation to be performed, followed by zero or more _operands_ supplying arguments or data that are used by the operation. Many instructions have no operands and consist only of an opcode.
 
@@ -353,21 +375,21 @@ do {
 
 The number and size of the operands are determined by the opcode. If an operand is more than one byte in size, then it is stored in _big-endian_ order - high-order byte first. For example, an unsigned 16-bit index into the local variables is stored as two unsigned bytes, _byte1_ and _byte2_, such that its value is \(_byte1_ `<<` 8\) \| _byte2_.
 
-The bytecode instruction stream is only single-byte aligned. The two exceptions are the _lookupswitch_ and _tableswitch_ instructions \([§_lookupswitch_](), [§_tableswitch_]()\), which are padded to force internal alignment of some of their operands on 4-byte boundaries.
+The bytecode instruction stream is only single-byte aligned. The two exceptions are the _lookupswitch_ and _tableswitch_ instructions \([§_lookupswitch_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.lookupswitch), [§_tableswitch_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.tableswitch)\), which are padded to force internal alignment of some of their operands on 4-byte boundaries.
 
 The decision to limit the Java Virtual Machine opcode to a byte and to forgo data alignment within compiled code reflects a conscious bias in favor of compactness, possibly at the cost of some performance in naive implementations. A one-byte opcode also limits the size of the instruction set. Not assuming data alignment means that immediate data larger than a byte must be constructed from bytes at run time on many machines.
 
-### 2.11.1. Types and the Java Virtual Machine
+#### 2.11.1. Types and the Java Virtual Machine
 
-Most of the instructions in the Java Virtual Machine instruction set encode type information about the operations they perform. For instance, the _iload_ instruction \([§_iload_]()\) loads the contents of a local variable, which must be an `int`, onto the operand stack. The _fload_ instruction \([§_fload_]()\) does the same with a `float` value. The two instructions may have identical implementations, but have distinct opcodes.
+Most of the instructions in the Java Virtual Machine instruction set encode type information about the operations they perform. For instance, the _iload_ instruction \([§_iload_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.iload)\) loads the contents of a local variable, which must be an `int`, onto the operand stack. The _fload_ instruction \([§_fload_](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5.fload)\) does the same with a `float` value. The two instructions may have identical implementations, but have distinct opcodes.
 
 For the majority of typed instructions, the instruction type is represented explicitly in the opcode mnemonic by a letter: _i_ for an `int` operation, _l_ for `long`, _s_ for `short`, _b_ for `byte`, _c_ for `char`, _f_ for `float`, _d_ for `double`, and _a_ for `reference`. Some instructions for which the type is unambiguous do not have a type letter in their mnemonic. For instance, _arraylength_ always operates on an object that is an array. Some instructions, such as _goto_, an unconditional control transfer, do not operate on typed operands.
 
 Given the Java Virtual Machine's one-byte opcode size, encoding types into opcodes places pressure on the design of its instruction set. If each typed instruction supported all of the Java Virtual Machine's run-time data types, there would be more instructions than could be represented in a byte. Instead, the instruction set of the Java Virtual Machine provides a reduced level of type support for certain operations. In other words, the instruction set is intentionally not orthogonal. Separate instructions can be used to convert between unsupported and supported data types as necessary.
 
- [Table 2.11.1-A](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.11.1-220) summarizes the type support in the instruction set of the Java Virtual Machine. A specific instruction, with type information, is built by replacing the _T_ in the instruction template in the opcode column by the letter in the type column. If the type column for some instruction template and type is blank, then no instruction exists supporting that type of operation. For instance, there is a load instruction for type `int`, _iload_, but there is no load instruction for type `byte`.
+[Table 2.11.1-A](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.1-220) summarizes the type support in the instruction set of the Java Virtual Machine. A specific instruction, with type information, is built by replacing the _T_ in the instruction template in the opcode column by the letter in the type column. If the type column for some instruction template and type is blank, then no instruction exists supporting that type of operation. For instance, there is a load instruction for type `int`, _iload_, but there is no load instruction for type `byte`.
 
-Note that most instructions in [Table 2.11.1-A](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.11.1-220) do not have forms for the integral types `byte`, `char`, and `short`. None have forms for the `boolean` type. A compiler encodes loads of literal values of types `byte` and `short` using Java Virtual Machine instructions that sign-extend those values to values of type `int` at compile-time or run-time. Loads of literal values of types `boolean` and `char` are encoded using instructions that zero-extend the literal to a value of type `int` at compile-time or run-time. Likewise, loads from arrays of values of type `boolean`, `byte`, `short`, and `char` are encoded using Java Virtual Machine instructions that sign-extend or zero-extend the values to values of type `int`. Thus, most operations on values of actual types `boolean`, `byte`, `char`, and `short` are correctly performed by instructions operating on values of computational type `int`.
+Note that most instructions in [Table 2.11.1-A](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.1-220) do not have forms for the integral types `byte`, `char`, and `short`. None have forms for the `boolean` type. A compiler encodes loads of literal values of types `byte` and `short` using Java Virtual Machine instructions that sign-extend those values to values of type `int` at compile-time or run-time. Loads of literal values of types `boolean` and `char` are encoded using instructions that zero-extend the literal to a value of type `int` at compile-time or run-time. Likewise, loads from arrays of values of type `boolean`, `byte`, `short`, and `char` are encoded using Java Virtual Machine instructions that sign-extend or zero-extend the values to values of type `int`. Thus, most operations on values of actual types `boolean`, `byte`, `char`, and `short` are correctly performed by instructions operating on values of computational type `int`.
 
 **Table 2.11.1-A. Type support in the Java Virtual Machine instruction set**
 
@@ -402,9 +424,9 @@ Note that most instructions in [Table 2.11.1-A](chapter-2.-the-structure-of-the-
 | _if\_TcmpOP_ |  |  | _if\_icmpOP_ |  |  |  |  | _if\_acmpOP_ |
 | _Treturn_ |  |  | _ireturn_ | _lreturn_ | _freturn_ | _dreturn_ |  | _areturn_ |
 
-The mapping between Java Virtual Machine actual types and Java Virtual Machine computational types is summarized by [Table 2.11.1-B](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.11.1-320).
+The mapping between Java Virtual Machine actual types and Java Virtual Machine computational types is summarized by [Table 2.11.1-B](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.1-320).
 
-Certain Java Virtual Machine instructions such as _pop_ and _swap_ operate on the operand stack without regard to type; however, such instructions are constrained to use only on values of certain categories of computational types, also given in [Table 2.11.1-B](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.11.1-320).
+Certain Java Virtual Machine instructions such as _pop_ and _swap_ operate on the operand stack without regard to type; however, such instructions are constrained to use only on values of certain categories of computational types, also given in [Table 2.11.1-B](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.1-320).
 
 **Table 2.11.1-B. Actual and Computational types in the Java Virtual Machine**
 
@@ -421,24 +443,24 @@ Certain Java Virtual Machine instructions such as _pop_ and _swap_ operate on th
 | `long` | `long` | 2 |
 | `double` | `double` | 2 |
 
-### 2.11.2. Load and Store Instructions
+#### 2.11.2. Load and Store Instructions
 
-The load and store instructions transfer values between the local variables \([§2.6.1](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.6.1)\) and the operand stack \([§2.6.2](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.6.2)\) of a Java Virtual Machine frame \([§2.6](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.6)\):
+The load and store instructions transfer values between the local variables \([§2.6.1](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6.1)\) and the operand stack \([§2.6.2](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6.2)\) of a Java Virtual Machine frame \([§2.6](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6)\):
 
-* Load a local variable onto the operand stack: _iload_, _iload\__, _lload_, _lload\__, _fload_, _fload\__, _dload_, _dload\__, _aload_, _aload\__.
-* Store a value from the operand stack into a local variable: _istore_, _istore\__, _lstore_, _lstore\__, _fstore_, _fstore\__, _dstore_, _dstore\__, _astore_, _astore\__.
-* Load a constant on to the operand stack: _bipush_, _sipush_, _ldc_, _ldc\_w_, _ldc2\_w_, _aconst\_null_, _iconst\_m1_, _iconst\__, _lconst\__, _fconst\__, _dconst\__.
+* Load a local variable onto the operand stack: _iload_, _iload\_&lt;n&gt;_, _lload_, _lload\_&lt;n&gt;_, _fload_, _fload\_&lt;n&gt;_, _dload_, _dload\_&lt;n&gt;_, _aload_, _aload\_&lt;n&gt;_.
+* Store a value from the operand stack into a local variable: _istore_, _istore\_&lt;n&gt;_, _lstore_, _lstore\_&lt;n&gt;_, _fstore_, _fstore\_&lt;n&gt;_, _dstore_, _dstore\_&lt;n&gt;_, _astore_, _astore\_&lt;n&gt;_.
+* Load a constant on to the operand stack: _bipush_, _sipush_, _ldc_, _ldc\_w_, _ldc2\_w_, _aconst\_null_, _iconst\_m1_, _iconst\_&lt;i&gt;_, _lconst\_&lt;l&gt;_, _fconst\_&lt;f&gt;_, _dconst\_&lt;d&gt;_.
 * Gain access to more local variables using a wider index, or to a larger immediate operand: _wide_.
 
-Instructions that access fields of objects and elements of arrays \([§2.11.5](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.11.5)\) also transfer data to and from the operand stack.
+Instructions that access fields of objects and elements of arrays \([§2.11.5](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.5)\) also transfer data to and from the operand stack.
 
-Instruction mnemonics shown above with trailing letters between angle brackets \(for instance, _iload\__\) denote families of instructions \(with members _iload\_0_, _iload\_1_, _iload\_2_, and _iload\_3_ in the case of _iload\__\). Such families of instructions are specializations of an additional generic instruction \(_iload_\) that takes one operand. For the specialized instructions, the operand is implicit and does not need to be stored or fetched. The semantics are otherwise the same \(_iload\_0_ means the same thing as _iload_ with the operand _0_\). The letter between the angle brackets specifies the type of the implicit operand for that family of instructions: for, a nonnegative integer; for , an `int`; for, a `long`; for, a `float`; and for, a `double`. Forms for type `int` are used in many cases to perform operations on values of type `byte`, `char`, and `short` \([§2.11.1](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.11.1)\).
+Instruction mnemonics shown above with trailing letters between angle brackets \(for instance, _iload\_&lt;n&gt;_\) denote families of instructions \(with members _iload\_0_, _iload\_1_, _iload\_2_, and _iload\_3_ in the case of _iload\_&lt;n&gt;_\). Such families of instructions are specializations of an additional generic instruction \(_iload_\) that takes one operand. For the specialized instructions, the operand is implicit and does not need to be stored or fetched. The semantics are otherwise the same \(_iload\_0_ means the same thing as _iload_ with the operand _0_\). The letter between the angle brackets specifies the type of the implicit operand for that family of instructions: for _&lt;n&gt;_, a nonnegative integer; for _&lt;i&gt;_, an `int`; for _&lt;l&gt;_, a `long`; for _&lt;f&gt;_, a `float`; and for _&lt;d&gt;_, a `double`. Forms for type `int` are used in many cases to perform operations on values of type `byte`, `char`, and `short` \([§2.11.1](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.1)\).
 
 This notation for instruction families is used throughout this specification.
 
-### 2.11.3. Arithmetic Instructions
+#### 2.11.3. Arithmetic Instructions
 
-The arithmetic instructions compute a result that is typically a function of two values on the operand stack, pushing the result back on the operand stack. There are two main kinds of arithmetic instructions: those operating on integer values and those operating on floating-point values. Within each of these kinds, the arithmetic instructions are specialized to Java Virtual Machine numeric types. There is no direct support for integer arithmetic on values of the `byte`, `short`, and `char` types \([§2.11.1](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.11.1)\), or for values of the `boolean` type; those operations are handled by instructions operating on type `int`. Integer and floating-point instructions also differ in their behavior on overflow and divide-by-zero. The arithmetic instructions are as follows:
+The arithmetic instructions compute a result that is typically a function of two values on the operand stack, pushing the result back on the operand stack. There are two main kinds of arithmetic instructions: those operating on integer values and those operating on floating-point values. Within each of these kinds, the arithmetic instructions are specialized to Java Virtual Machine numeric types. There is no direct support for integer arithmetic on values of the `byte`, `short`, and `char` types \([§2.11.1](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.1)\), or for values of the `boolean` type; those operations are handled by instructions operating on type `int`. Integer and floating-point instructions also differ in their behavior on overflow and divide-by-zero. The arithmetic instructions are as follows:
 
 * Add: _iadd_, _ladd_, _fadd_, _dadd_.
 * Subtract: _isub_, _lsub_, _fsub_, _dsub_.
@@ -467,7 +489,7 @@ The Java Virtual Machine's floating-point operators do not throw run-time except
 
 Comparisons on values of type `long` \(_lcmp_\) perform a signed comparison. Comparisons on values of floating-point types \(_dcmpg_, _dcmpl_, _fcmpg_, _fcmpl_\) are performed using IEEE 754 nonsignaling comparisons.
 
-### 2.11.4. Type Conversion Instructions
+#### 2.11.4. Type Conversion Instructions
 
 The type conversion instructions allow conversion between Java Virtual Machine numeric types. These may be used to implement explicit conversions in user code or to mitigate the lack of orthogonality in the instruction set of the Java Virtual Machine.
 
@@ -479,7 +501,7 @@ The Java Virtual Machine directly supports the following widening numeric conver
 
 The widening numeric conversion instructions are _i2l_, _i2f_, _i2d_, _l2f_, _l2d_, and _f2d_. The mnemonics for these opcodes are straightforward given the naming conventions for typed instructions and the punning use of 2 to mean "to." For instance, the _i2d_ instruction converts an `int` value to a `double`.
 
-Most widening numeric conversions do not lose information about the overall magnitude of a numeric value. Indeed, conversions widening from `int` to `long` and `int` to `double` do not lose any information at all; the numeric value is preserved exactly. Conversions widening from `float` to `double` that are FP-strict \([§2.8.2](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.8.2)\) also preserve the numeric value exactly; only such conversions that are not FP-strict may lose information about the overall magnitude of the converted value.
+Most widening numeric conversions do not lose information about the overall magnitude of a numeric value. Indeed, conversions widening from `int` to `long` and `int` to `double` do not lose any information at all; the numeric value is preserved exactly. Conversions widening from `float` to `double` that are FP-strict \([§2.8.2](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.8.2)\) also preserve the numeric value exactly; only such conversions that are not FP-strict may lose information about the overall magnitude of the converted value.
 
 Conversions from `int` to `float`, or from `long` to `float`, or from `long` to `double`, may lose _precision_, that is, may lose some of the least significant bits of the value; the resulting floating-point value is a correctly rounded version of the integer value, using IEEE 754 round to nearest mode.
 
@@ -487,7 +509,7 @@ Despite the fact that loss of precision may occur, widening numeric conversions 
 
 A widening numeric conversion of an `int` to a `long` simply sign-extends the two's-complement representation of the `int` value to fill the wider format. A widening numeric conversion of a `char` to an integral type zero-extends the representation of the `char` value to fill the wider format.
 
-Note that widening numeric conversions do not exist from integral types `byte`, `char`, and `short` to type `int`. As noted in [§2.11.1](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.11.1), values of type `byte`, `char`, and `short` are internally widened to type `int`, making these conversions implicit.
+Note that widening numeric conversions do not exist from integral types `byte`, `char`, and `short` to type `int`. As noted in [§2.11.1](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.1), values of type `byte`, `char`, and `short` are internally widened to type `int`, making these conversions implicit.
 
 The Java Virtual Machine also directly supports the following narrowing numeric conversions:
 
@@ -514,23 +536,23 @@ A narrowing numeric conversion from `double` to `float` behaves in accordance wi
 
 Despite the fact that overflow, underflow, or loss of precision may occur, narrowing conversions among numeric types never cause the Java Virtual Machine to throw a run-time exception \(not to be confused with an IEEE 754 floating-point exception\).
 
-### 2.11.5. Object Creation and Manipulation
+#### 2.11.5. Object Creation and Manipulation
 
 Although both class instances and arrays are objects, the Java Virtual Machine creates and manipulates class instances and arrays using distinct sets of instructions:
 
-*  Create a new class instance: _new_.
-*  Create a new array: _newarray_, _anewarray_, _multianewarray_.
-*  Access fields of classes \(`static` fields, known as class variables\) and fields of class instances \(non-`static` fields, known as instance variables\): _getstatic_, _putstatic_, _getfield_, _putfield_.
-*  Load an array component onto the operand stack: _baload_, _caload_, _saload_, _iaload_, _laload_, _faload_, _daload_, _aaload_.
-*  Store a value from the operand stack as an array component: _bastore_, _castore_, _sastore_, _iastore_, _lastore_, _fastore_, _dastore_, _aastore_.
-*  Get the length of array: _arraylength_.
-*  Check properties of class instances or arrays: _instanceof_, _checkcast_.
+* Create a new class instance: _new_.
+* Create a new array: _newarray_, _anewarray_, _multianewarray_.
+* Access fields of classes \(`static` fields, known as class variables\) and fields of class instances \(non-`static` fields, known as instance variables\): _getstatic_, _putstatic_, _getfield_, _putfield_.
+* Load an array component onto the operand stack: _baload_, _caload_, _saload_, _iaload_, _laload_, _faload_, _daload_, _aaload_.
+* Store a value from the operand stack as an array component: _bastore_, _castore_, _sastore_, _iastore_, _lastore_, _fastore_, _dastore_, _aastore_.
+* Get the length of array: _arraylength_.
+* Check properties of class instances or arrays: _instanceof_, _checkcast_.
 
-### 2.11.6. Operand Stack Management Instructions
+#### 2.11.6. Operand Stack Management Instructions
 
 A number of instructions are provided for the direct manipulation of the operand stack: _pop_, _pop2_, _dup_, _dup2_, _dup\_x1_, _dup2\_x1_, _dup\_x2_, _dup2\_x2_, _swap_.
 
-### 2.11.7. Control Transfer Instructions
+#### 2.11.7. Control Transfer Instructions
 
 The control transfer instructions conditionally or unconditionally cause the Java Virtual Machine to continue execution with an instruction other than the one following the control transfer instruction. They are:
 
@@ -538,40 +560,44 @@ The control transfer instructions conditionally or unconditionally cause the Jav
 * Compound conditional branch: _tableswitch_, _lookupswitch_.
 * Unconditional branch: _goto_, _goto\_w_, _jsr_, _jsr\_w_, _ret_.
 
-The Java Virtual Machine has distinct sets of instructions that conditionally branch on comparison with data of `int` and `reference` types. It also has distinct conditional branch instructions that test for the null reference and thus it is not required to specify a concrete value for `null` \([§2.4](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.4)\).
+The Java Virtual Machine has distinct sets of instructions that conditionally branch on comparison with data of `int` and `reference` types. It also has distinct conditional branch instructions that test for the null reference and thus it is not required to specify a concrete value for `null` \([§2.4](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.4)\).
 
-Conditional branches on comparisons between data of types `boolean`, `byte`, `char`, and `short` are performed using `int` comparison instructions \([§2.11.1](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.11.1)\). A conditional branch on a comparison between data of types `long`, `float`, or `double` is initiated using an instruction that compares the data and produces an `int` result of the comparison \([§2.11.3](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.11.3)\). A subsequent `int` comparison instruction tests this result and effects the conditional branch. Because of its emphasis on `int` comparisons, the Java Virtual Machine provides a rich complement of conditional branch instructions for type `int`.
+Conditional branches on comparisons between data of types `boolean`, `byte`, `char`, and `short` are performed using `int` comparison instructions \([§2.11.1](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.1)\). A conditional branch on a comparison between data of types `long`, `float`, or `double` is initiated using an instruction that compares the data and produces an `int` result of the comparison \([§2.11.3](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.3)\). A subsequent `int` comparison instruction tests this result and effects the conditional branch. Because of its emphasis on `int` comparisons, the Java Virtual Machine provides a rich complement of conditional branch instructions for type `int`.
 
 All `int` conditional control transfer instructions perform signed comparisons.
 
-### 2.11.8. Method Invocation and Return Instructions
+#### 2.11.8. Method Invocation and Return Instructions
 
 The following five instructions invoke methods:
 
 * _invokevirtual_ invokes an instance method of an object, dispatching on the \(virtual\) type of the object. This is the normal method dispatch in the Java programming language.
 * _invokeinterface_ invokes an interface method, searching the methods implemented by the particular run-time object to find the appropriate method.
-* _invokespecial_ invokes an instance method requiring special handling, whether an instance initialization method \([§2.9](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.9)\), a `private` method, or a superclass method.
+* _invokespecial_ invokes an instance method requiring special handling, whether an instance initialization method \([§2.9](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.9)\), a `private` method, or a superclass method.
 * _invokestatic_ invokes a class \(`static`\) method in a named class.
 * _invokedynamic_ invokes the method which is the target of the call site object bound to the _invokedynamic_ instruction. The call site object was bound to a specific lexical occurrence of the _invokedynamic_ instruction by the Java Virtual Machine as a result of running a bootstrap method before the first execution of the instruction. Therefore, each occurrence of an _invokedynamic_ instruction has a unique linkage state, unlike the other instructions which invoke methods.
 
 The method return instructions, which are distinguished by return type, are _ireturn_ \(used to return values of type `boolean`, `byte`, `char`, `short`, or `int`\), _lreturn_, _freturn_, _dreturn_, and _areturn_. In addition, the _return_ instruction is used to return from methods declared to be void, instance initialization methods, and class or interface initialization methods.
 
-### 2.11.9. Throwing Exceptions
+#### 2.11.9. Throwing Exceptions
 
 An exception is thrown programmatically using the _athrow_ instruction. Exceptions can also be thrown by various Java Virtual Machine instructions if they detect an abnormal condition.
 
+#### 2.11.10. Synchronization
+
 The Java Virtual Machine supports synchronization of both methods and sequences of instructions within a method by a single synchronization construct: the _monitor_.
 
-Method-level synchronization is performed implicitly, as part of method invocation and return \([§2.11.8](chapter-2.-the-structure-of-the-java-virtual-machine.md#jvms-2.11.8)\). A `synchronized` method is distinguished in the run-time constant pool's `method_info` structure \([§4.6](chapter-4.-the-class-file-format/#jvms-4.6)\) by the `ACC_SYNCHRONIZED` flag, which is checked by the method invocation instructions. When invoking a method for which `ACC_SYNCHRONIZED` is set, the executing thread enters a monitor, invokes the method itself, and exits the monitor whether the method invocation completes normally or abruptly. During the time the executing thread owns the monitor, no other thread may enter it. If an exception is thrown during invocation of the `synchronized` method and the `synchronized` method does not handle the exception, the monitor for the method is automatically exited before the exception is rethrown out of the `synchronized` method.
+Method-level synchronization is performed implicitly, as part of method invocation and return \([§2.11.8](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.8)\). A `synchronized` method is distinguished in the run-time constant pool's `method_info` structure \([§4.6](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.6)\) by the `ACC_SYNCHRONIZED` flag, which is checked by the method invocation instructions. When invoking a method for which `ACC_SYNCHRONIZED` is set, the executing thread enters a monitor, invokes the method itself, and exits the monitor whether the method invocation completes normally or abruptly. During the time the executing thread owns the monitor, no other thread may enter it. If an exception is thrown during invocation of the `synchronized` method and the `synchronized` method does not handle the exception, the monitor for the method is automatically exited before the exception is rethrown out of the `synchronized` method.
 
-Synchronization of sequences of instructions is typically used to encode the `synchronized` block of the Java programming language. The Java Virtual Machine supplies the _monitorenter_ and _monitorexit_ instructions to support such language constructs. Proper implementation of `synchronized` blocks requires cooperation from a compiler targeting the Java Virtual Machine \([§3.14](chapter-3.-compiling-for-the-java-virtual-machine.md#jvms-3.14)\).
+Synchronization of sequences of instructions is typically used to encode the `synchronized` block of the Java programming language. The Java Virtual Machine supplies the _monitorenter_ and _monitorexit_ instructions to support such language constructs. Proper implementation of `synchronized` blocks requires cooperation from a compiler targeting the Java Virtual Machine \([§3.14](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-3.html#jvms-3.14)\).
 
 _Structured locking_ is the situation when, during a method invocation, every exit on a given monitor matches a preceding entry on that monitor. Since there is no assurance that all code submitted to the Java Virtual Machine will perform structured locking, implementations of the Java Virtual Machine are permitted but not required to enforce both of the following two rules guaranteeing structured locking. Let _T_ be a thread and _M_ be a monitor. Then:
 
-1.  The number of monitor entries performed by _T_ on _M_ during a method invocation must equal the number of monitor exits performed by _T_ on _M_ during the method invocation whether the method invocation completes normally or abruptly.
-2.  At no point during a method invocation may the number of monitor exits performed by _T_ on _M_ since the method invocation exceed the number of monitor entries performed by _T_ on _M_ since the method invocation.
+1. The number of monitor entries performed by _T_ on _M_ during a method invocation must equal the number of monitor exits performed by _T_ on _M_ during the method invocation whether the method invocation completes normally or abruptly.
+2. At no point during a method invocation may the number of monitor exits performed by _T_ on _M_ since the method invocation exceed the number of monitor entries performed by _T_ on _M_ since the method invocation.
 
 Note that the monitor entry and exit automatically performed by the Java Virtual Machine when invoking a `synchronized` method are considered to occur during the calling method's invocation.
+
+### 2.12. Class Libraries
 
 The Java Virtual Machine must provide sufficient support for the implementation of the class libraries of the Java SE platform. Some of the classes in these libraries cannot be implemented without the cooperation of the Java Virtual Machine.
 
@@ -586,7 +612,7 @@ Classes that might require special support from the Java Virtual Machine include
 
 The list above is meant to be illustrative rather than comprehensive. An exhaustive list of these classes or of the functionality they provide is beyond the scope of this specification. See the specifications of the Java SE platform class libraries for details.
 
-## 2.13. Public Design, Private Implementation
+### 2.13. Public Design, Private Implementation
 
 Thus far this specification has sketched the public view of the Java Virtual Machine: the `class` file format and the instruction set. These components are vital to the hardware-, operating system-, and implementation-independence of the Java Virtual Machine. The implementor may prefer to think of them as a means to securely communicate fragments of programs between hosts each implementing the Java SE platform, rather than as a blueprint to be followed exactly.
 
